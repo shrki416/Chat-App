@@ -1,8 +1,9 @@
 import React from "react";
+import Title from "./Title";
 import "./App.css";
 
 const App = () => {
-  return <h1>Chat App</h1>;
+  return <Title />;
 };
 
 export default App;
