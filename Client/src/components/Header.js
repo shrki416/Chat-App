@@ -1,5 +1,5 @@
 import React from "react";
-import chat from "./assets/chat_icon.png";
+import chat from "../assets/chat_icon.png";
 
 const Header = () => {
   return (

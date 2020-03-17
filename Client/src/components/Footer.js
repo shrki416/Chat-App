@@ -1,6 +1,6 @@
 import React from "react";
-import github from "./assets/github-icon.png";
-import website from "./assets/website-icon.png";
+import github from "../assets/github-icon.png";
+import website from "../assets/website-icon.png";
 
 const Footer = () => {
   const year = new Date().getFullYear();
