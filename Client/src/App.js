@@ -1,12 +1,12 @@
 import React from "react";
-import Title from "./Title";
+import Header from "./Header";
 import Footer from "./Footer";
 import "./App.css";
 
 const App = () => {
   return (
     <>
-      <Title />
+      <Header />
       <Footer />
     </>
   );
