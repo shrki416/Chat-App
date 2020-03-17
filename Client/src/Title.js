@@ -1,14 +1,13 @@
 import React from "react";
-import "semantic-ui-css/semantic.min.css";
-import { Header, Icon } from "semantic-ui-react";
+import chat from "./assets/chat_icon.png";
 
 const Title = () => {
   return (
     <>
-      <Header as="h1">
-        <Icon name="comments outline" />
-        <Header.Content>Chat App</Header.Content>
-      </Header>
+      <div className="title">
+        <img src={chat} />
+        <h1>Chat App</h1>
+      </div>
     </>
   );
 };
