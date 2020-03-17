@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@400;500;600;700;800&display=swap");
+
 *,
 *::before,
 *::after {
@@ -6,7 +8,27 @@
   box-sizing: border-box;
 }
 
-body {
-  background: #fff;
+.title {
+  font-family: "Baloo Chettan 2", cursive;
+  font-weight: 800;
+  display: flex;
+  justify-content: center;
   padding: 1rem;
+  background: #a29bfe;
+}
+
+.footer {
+  background: #a29bfe;
+  font-weight: 400;
+  font-family: "Baloo Chettan 2", cursive;
+  display: flex;
+  color: #ccc;
+  position: absolute;
+  text-align: center;
+  align-items: center;
+  align-content: center;
+  justify-content: space-evenly;
+  bottom: 0;
+  width: 100vw;
+  height: 5rem;
 }
