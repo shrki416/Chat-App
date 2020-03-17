@@ -8,25 +8,33 @@
   box-sizing: border-box;
 }
 
-.title {
-  font-family: "Baloo Chettan 2", cursive;
+:root {
+  --primary: #a29bfe;
+  --light: #fff;
+  --dark: #000;
+  --body-bg: #ccc;
+  --ff-main: "Baloo Chettan 2", cursive;
+  /* --ff-accent: "Nova Flat", sans-serif; */
+}
+
+.header {
+  font-family: var(--ff-main);
   font-weight: 800;
   display: flex;
   justify-content: center;
   padding: 1rem;
-  background: #a29bfe;
+  background: var(--primary);
 }
 
 .footer {
-  background: #a29bfe;
+  background: var(--primary);
+  color: var(--body-bg);
+  font-family: var(--ff-main);
   font-weight: 400;
-  font-family: "Baloo Chettan 2", cursive;
   display: flex;
-  color: #ccc;
   position: absolute;
   text-align: center;
   align-items: center;
-  align-content: center;
   justify-content: space-evenly;
   bottom: 0;
   width: 100vw;
