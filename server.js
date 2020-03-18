@@ -11,7 +11,7 @@ const client = new Client({
 client.connect();
 
 client.query("SELECT * FROM messages", (err, res) => {
-  console.log(err, res);
+  // console.log(err, res);
   client.end();
 });
 

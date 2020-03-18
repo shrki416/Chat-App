@@ -40,3 +40,36 @@
   width: 100vw;
   height: 5rem;
 }
+
+.chat-container {
+  margin: 15% 20%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.chat-container-messages {
+  grid-column: 2 / 4;
+}
+
+.add-user-btn {
+  display: flex;
+  padding: 0 5%;
+  border-radius: 5px;
+  color: var(--primary);
+  background: var(--dark);
+  justify-items: center;
+  align-items: center;
+  font-family: var(--ff-main);
+  font-size: large;
+  outline: none;
+}
+
+.add-user-btn:hover,
+.add-user-btn:focus {
+  background: var(--body-bg);
+  color: var(--dark);
+}
+
+.add-message-container {
+  width: 250%;
+}
