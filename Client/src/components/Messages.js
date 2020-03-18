@@ -1,7 +1,7 @@
 import React from "react";
 
 const Messages = () => {
-  return <div>Messages</div>;
+  return <div className="chat-container-messages">Messages</div>;
 };
 
 export default Messages;
