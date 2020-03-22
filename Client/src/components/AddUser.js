@@ -1,7 +1,16 @@
 import React from "react";
+import add from "../assets/add-icon.png";
 
 const AddUser = () => {
-  return <div className="chat-container-add-user">Add User</div>;
+  const handleClick = e => {
+    console.log("user added");
+  };
+
+  return (
+    <button className="add-user" onClick={handleClick}>
+      <img src={add} /> Add User
+    </button>
+  );
 };
 
 export default AddUser;
