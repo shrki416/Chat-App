@@ -85,6 +85,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  cursor: pointer;
 }
 
 .add-user:hover,
@@ -94,6 +95,7 @@
 }
 
 .add-message {
+  border: none;
   display: flex;
   place-items: center;
   justify-content: space-between;
@@ -102,15 +104,18 @@
 
 .add-message > button {
   background: transparent;
+  cursor: pointer;
   outline: none;
   border: none;
+  width: 15%;
 }
 
 .add-message > input {
-  border-radius: 50em;
+  font-family: var(--ff-main);
+  font-size: small;
+  border-radius: 5rem;
   background: var(--body-accent);
   border: 1px solid var(--body-bg);
-  outline: none;
-  padding: 1em;
+  padding: 0.25rem 0.75rem;
   width: 85%;
 }
