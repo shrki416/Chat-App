@@ -13,8 +13,8 @@
   --light: #fff;
   --dark: #000;
   --body-bg: #ccc;
-  --body-accent: #dfe4ea;
   --ff-main: "Baloo Chettan 2", cursive;
+  /* --ff-accent: "Nova Flat", sans-serif; */
 }
 
 .header {
@@ -39,88 +39,4 @@
   bottom: 0;
   width: 100vw;
   height: 5rem;
-}
-
-.container {
-  font-family: var(--ff-main);
-  display: flex;
-  justify-content: space-between;
-  height: 30em;
-  margin: 15% 20%;
-  border: 2px solid var(--primary);
-}
-
-.user-container {
-  flex-basis: 30%;
-}
-
-.message-container {
-  flex-basis: 70%;
-}
-
-.messages,
-.users {
-  text-align: center;
-  border: 1px solid var(--body-bg);
-  height: 90%;
-}
-
-.users {
-  background: var(--body-accent);
-}
-
-.messages > p,
-.users > p {
-  text-align: left;
-  padding-left: 0.25rem;
-}
-
-.add-message,
-.add-user {
-  border: 1px solid var(--body-bg);
-  height: 10%;
-}
-
-.add-user {
-  font-family: var(--ff-main);
-  background-color: var(--primary);
-  border: none;
-  font-size: large;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  cursor: pointer;
-}
-
-.add-user:hover,
-.add-user:focus {
-  background: #222f3e;
-  color: var(--primary);
-}
-
-.add-message {
-  border: none;
-  display: flex;
-  place-items: center;
-  justify-content: space-between;
-  padding: 0.5em;
-}
-
-.add-message > button {
-  background: transparent;
-  cursor: pointer;
-  outline: none;
-  border: none;
-  width: 15%;
-}
-
-.add-message > input {
-  font-family: var(--ff-main);
-  font-size: small;
-  border-radius: 5rem;
-  background: var(--body-accent);
-  border: 1px solid var(--body-bg);
-  padding: 0.25rem 0.75rem;
-  width: 85%;
 }
