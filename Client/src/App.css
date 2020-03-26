@@ -17,6 +17,15 @@
   --ff-main: "Baloo Chettan 2", cursive;
 }
 
+.container {
+  font-family: var(--ff-main);
+  display: flex;
+  justify-content: space-between;
+  height: 30em;
+  margin: 5% 25%;
+  border: 2px solid var(--primary);
+}
+
 .header {
   font-family: var(--ff-main);
   font-weight: 800;
@@ -39,15 +48,6 @@
   bottom: 0;
   width: 100vw;
   height: 5rem;
-}
-
-.container {
-  font-family: var(--ff-main);
-  display: flex;
-  justify-content: space-between;
-  height: 30em;
-  margin: 15% 20%;
-  border: 2px solid var(--primary);
 }
 
 .user-container {
@@ -123,4 +123,10 @@
   border: 1px solid var(--body-bg);
   padding: 0.25rem 0.75rem;
   width: 85%;
+}
+
+@media screen and (max-width: 750px) {
+  .container {
+    margin: 1%;
+  }
 }
