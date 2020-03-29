@@ -1,6 +1,6 @@
 import React from "react";
 
-const Messages = (props) => {
+const Messages = props => {
   return (
     <div className="messages">
       <h2>Messages</h2>
