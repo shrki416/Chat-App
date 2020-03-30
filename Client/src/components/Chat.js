@@ -1,6 +1,7 @@
 import React from "react";
 import send from "../assets/send-icon.png";
 import add from "../assets/add-icon.png";
+import data from "./data";
 
 const Chat = () => {
   const addMessage = e => {
@@ -16,7 +17,7 @@ const Chat = () => {
       <div className="user-container">
         <div className="users">
           <h2>Users</h2>
-          <p>Ahmed</p>
+          <p>{data[0].name}</p>
         </div>
         <div>
           <button className="add-user" onClick={addUser}>
@@ -27,8 +28,15 @@ const Chat = () => {
       <div className="message-container">
         <div className="messages">
           <h2>Messages</h2>
-          <p>User: Hi, How are you?</p>
-          <p>User: What are you up to?</p>
+          <p>
+            {data[0].name}: {data[0].text}
+          </p>
+          <p>
+            {data[1].name}: {data[1].text}
+          </p>
+          <p>
+            {data[2].name}: {data[2].text}
+          </p>
         </div>
         <div className="add-message">
           <input placeholder="what's on your mind?" />
