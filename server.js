@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-const { Pool, Client } = require("pg");
+const { Pool } = require("pg");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -22,7 +22,7 @@ app.get("/api/messages", (request, response) => {
     if (err) {
       console.log(`Something went wrong: Error is ${err}`);
     } else {
-      console.log(res.rows);
+      console.table(res.rows);
     }
   });
 });
@@ -32,9 +32,13 @@ app.get("/api/users", (request, response) => {
     if (err) {
       console.log(`Something went wrong: Error is ${err}`);
     } else {
-      console.log(res.rows);
+      console.table(res.rows);
     }
   });
+});
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 app.listen(port, () => console.log(`Server started on port ${port}!`));
