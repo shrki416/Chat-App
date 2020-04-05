@@ -1,40 +1,36 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-const { Pool } = require("pg");
+const pool = require("./db");
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-const pool = new Pool({
-  user: "AA",
-  host: "localhost",
-  database: "chat_app",
-  password: "chat",
-  port: 5432
-});
-
 app.use(express.static(path.join(__dirname, "client/build")));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/api/messages", (request, response) => {
-  pool.query("SELECT * FROM messages", (err, res) => {
-    if (err) {
-      console.log(`Something went wrong: Error is ${err}`);
-    } else {
-      console.table(res.rows);
-    }
-  });
+app.get("/messages", async (req, res) => {
+  try {
+    const messages = await pool.query("SELECT * FROM messages");
+    console.table(messages.rows);
+    // res.send(messages.rows);
+    res.json(messages.rows);
+  } catch (error) {
+    console.log(`Something went wrong: ${error}`);
+    res.sendStatus(500);
+  }
 });
 
-app.get("/api/users", (request, response) => {
-  pool.query("SELECT * FROM users", (err, res) => {
-    if (err) {
-      console.log(`Something went wrong: Error is ${err}`);
-    } else {
-      console.table(res.rows);
-    }
-  });
+app.get("/users", async (req, res) => {
+  try {
+    const users = await pool.query("SELECT * FROM users");
+    console.table(users.rows);
+    // res.send(messages.rows);
+    res.json(users.rows);
+  } catch (error) {
+    console.log(`Something went wrong: ${error}`);
+    res.sendStatus(500);
+  }
 });
 
 app.get("/*", (req, res) => {

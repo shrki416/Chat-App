@@ -9,6 +9,8 @@ const Chat = () => {
   };
 
   const addUser = e => {
+    e.preventDefault();
+    
     console.log("user added");
   };
 
