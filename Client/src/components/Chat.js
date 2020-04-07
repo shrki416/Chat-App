@@ -10,7 +10,6 @@ const Chat = () => {
       const db_messages = await fetch("/messages");
       const messages = await db_messages.json();
       setMessages(messages);
-      console.log(messages);
     } catch (error) {
       console.log(`Something went wrong: ${error}`);
     }
