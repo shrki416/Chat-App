@@ -13,7 +13,6 @@ app.get("/messages", async (req, res) => {
   try {
     const messages = await pool.query("SELECT * FROM messages");
     console.table(messages.rows);
-    // res.send(messages.rows);
     res.json(messages.rows);
   } catch (error) {
     console.log(`Something went wrong: ${error}`);
@@ -25,7 +24,6 @@ app.get("/users", async (req, res) => {
   try {
     const users = await pool.query("SELECT * FROM users");
     console.table(users.rows);
-    // res.send(messages.rows);
     res.json(users.rows);
   } catch (error) {
     console.log(`Something went wrong: ${error}`);

@@ -4,6 +4,7 @@ import add from "../assets/add-icon.png";
 
 const Chat = () => {
   const [messages, setMessages] = useState({});
+  const [users, setUsers] = useState({});
 
   const getMessages = async () => {
     try {
@@ -15,18 +16,34 @@ const Chat = () => {
     }
   };
 
+  const getusers = async () => {
+    try {
+      const db_users = await fetch("/users");
+      const users = await db_users.json();
+      setUsers(users);
+    } catch (error) {
+      console.log(`Something went wrong: ${error}`);
+    }
+  };
+
   useEffect(() => {
     getMessages();
+    getusers();
   }, []);
 
-  const messagesArr = Object.values(messages);
+  const messagesObj = Object.values(messages);
+  const userObj = Object.values(users);
 
-  const displayMessages = messagesArr.map((message) => {
+  const displayMessages = messagesObj.map((message) => {
     return (
       <p key={message.id}>
         {message.userid}: {message.text}
       </p>
     );
+  });
+
+  const displayUsers = userObj.map((user) => {
+    return <p key={user.id}>{user.username}</p>;
   });
 
   const addMessage = (e) => {
@@ -44,7 +61,7 @@ const Chat = () => {
       <div className="user-container">
         <div className="users">
           <h2>Users</h2>
-          <p>Ahmed</p>
+          {displayUsers}
         </div>
         <div>
           <button className="add-user" onClick={addUser}>
