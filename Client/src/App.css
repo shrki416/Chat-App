@@ -9,7 +9,8 @@
 }
 
 :root {
-  --primary: #a29bfe;
+  /* --primary: #a29bfe; */
+  --primary: #009432;
   --light: #fff;
   --dark: #000;
   --body-bg: #ccc;
