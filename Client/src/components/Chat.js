@@ -8,7 +8,7 @@ const Chat = () => {
 
   const getMessages = async () => {
     try {
-      const db_messages = await fetch("/messages");
+      const db_messages = await fetch("messages");
       const messages = await db_messages.json();
       setMessages(messages);
     } catch (error) {
@@ -18,7 +18,7 @@ const Chat = () => {
 
   const getusers = async () => {
     try {
-      const db_users = await fetch("/users");
+      const db_users = await fetch("users");
       const users = await db_users.json();
       setUsers(users);
     } catch (error) {
