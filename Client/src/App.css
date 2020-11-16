@@ -17,6 +17,10 @@
   --ff-main: "Baloo Chettan 2", cursive;
 }
 
+body {
+  background-color: var(--dark);
+}
+
 .container {
   font-family: var(--ff-main);
   display: flex;
