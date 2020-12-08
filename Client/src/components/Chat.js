@@ -34,17 +34,15 @@ const Chat = () => {
   const messagesObj = Object.values(messages);
   const userObj = Object.values(users);
 
-  const displayMessages = messagesObj.map((message) => {
-    return (
-      <p key={message.id}>
-        {message.userid}: {message.text}
-      </p>
-    );
-  });
+  const displayMessages = messagesObj.map((message) => (
+    <p key={message.id}>
+      {message.userid}: {message.text}
+    </p>
+  ));
 
-  const displayUsers = userObj.map((user) => {
-    return <p key={user.id}>{user.username}</p>;
-  });
+  const displayUsers = userObj.map((user) => (
+    <p key={user.id}>{user.username}</p>
+  ));
 
   const addMessage = (e) => {
     console.log("message sent");
