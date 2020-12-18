@@ -1,11 +1,11 @@
 import React from "react";
-import chat from "../assets/chat_icon.png";
+// import iMessage from "../assets/iMessage_logo.svg";
 
 const Header = () => {
   return (
     <>
       <div className="header">
-        <img src={chat} />
+        {/* <img src={iMessage} /> */}
         <h1>Chat App</h1>
       </div>
     </>
