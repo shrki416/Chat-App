@@ -9,7 +9,7 @@
 }
 
 :root {
-  --primary: #a29bfe;
+  --primary: rgb(8, 127, 254);
   --light: #fff;
   --dark: #000;
   --body-bg: #ccc;
@@ -18,7 +18,7 @@
 }
 
 body {
-  background-color: var(--dark);
+  background-color: var(--body-bg);
 }
 
 .container {
@@ -37,6 +37,11 @@ body {
   justify-content: center;
   padding: 1rem;
   background: var(--primary);
+}
+
+.header > img {
+  object-fit: contain;
+  height: 75px;
 }
 
 .footer {
