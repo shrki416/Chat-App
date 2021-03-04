@@ -13,7 +13,7 @@ const Footer = () => {
         </a>
       </p>
       <div>
-        <h5>Developed with ❤️ by AA</h5>
+        {/* <h5>Developed by AA</h5> */}
         <p>©️ {year}</p>
       </div>
       <p>
