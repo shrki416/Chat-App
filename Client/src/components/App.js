@@ -1,17 +1,24 @@
 import React from "react";
-import Header from "./Header";
-import Chat from "./Chat";
-import Footer from "./Footer";
+import Login from "../components/Auth/Login";
+import Register from "../components/Auth/Register";
+import Chat from "../components/Chat";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "../App.css";
 
-const App = () =>
-    (
-        <div className="chat-app">
-            <Header/>
-            <Chat/>
-            <Footer/>
-        </div>
-    );
+const App = () => {
+  return (
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route exact path="/" component={Chat} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route render={() => <h1>404 page not found</h1>} />
+        </Switch>
+      </div>
+    </Router>
+  );
+};
 
 export default App;
