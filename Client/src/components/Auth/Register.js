@@ -47,17 +47,6 @@ function Register() {
                 />
               </div>
 
-              <div className="input-field mb-1">
-                <select
-                //   onChange={(e) => setGender(e.target.value)}
-                //   value={gender}
-                //   required="required"
-                >
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-              </div>
-
               <div className="input-field mb-2">
                 <input
                   //   onChange={(e) => setPassword(e.target.value)}
