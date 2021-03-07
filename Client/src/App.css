@@ -1,7 +1,8 @@
 :root {
   --bg-main: #0652dd;
   --bg-light: #3498db;
-  --bg-gray: #f5f6f8;
+  /* --bg-gray: #f5f6f8; */
+  --bg-gray: #c8d6e5;
   --success: #42b983;
   --danger: #b94242;
 }
