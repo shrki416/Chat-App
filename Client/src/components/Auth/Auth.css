@@ -2,7 +2,7 @@
 
 #auth-container {
   min-height: 100vh;
-  background-color: var(--bg-gray);
+  background-color: var(--bg-main);
 }
 #auth-container #auth-card {
   display: flex;
@@ -24,7 +24,7 @@
   }
 }
 #auth-container #auth-card > div #image-section {
-  background-color: var(--bg-main);
+  background-color: var(--bg-gray);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   border-bottom-left-radius: 0;
