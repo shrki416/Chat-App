@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import registerImage from "../../assets/register.svg";
 import "./Auth.css";
 
 function Register() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const submit = (e) => {
+    e.preventDefault();
+    const data = { firstName, lastName, email, password };
+    axios.post("/api/register", data);
+  };
+
   return (
     <div id="auth-container">
       <div id="auth-card">
@@ -15,13 +27,12 @@ function Register() {
           <div id="form-section">
             <h2>Create an account</h2>
 
-            {/* <form onSubmit={submitForm}> */}
-            <form>
+            <form onSubmit={submit}>
               <div className="input-field mb-1">
                 <input
-                  //   onChange={(e) => setFirstName(e.target.value)}
-                  //   value={firstName}
-                  //   required="required"
+                  onChange={(e) => setFirstName(e.target.value)}
+                  value={firstName}
+                  required="required"
                   type="text"
                   placeholder="First name"
                 />
@@ -29,9 +40,9 @@ function Register() {
 
               <div className="input-field mb-1">
                 <input
-                  //   onChange={(e) => setLastName(e.target.value)}
-                  //   value={lastName}
-                  //   required="required"
+                  onChange={(e) => setLastName(e.target.value)}
+                  value={lastName}
+                  required="required"
                   type="text"
                   placeholder="Last name"
                 />
@@ -39,9 +50,9 @@ function Register() {
 
               <div className="input-field mb-1">
                 <input
-                  //   onChange={(e) => setEmail(e.target.value)}
-                  //   value={email}
-                  //   required="required"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  required="required"
                   type="text"
                   placeholder="Email"
                 />
@@ -49,9 +60,9 @@ function Register() {
 
               <div className="input-field mb-2">
                 <input
-                  //   onChange={(e) => setPassword(e.target.value)}
-                  //   value={password}
-                  //   required="required"
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  required="required"
                   type="password"
                   placeholder="Password"
                 />
