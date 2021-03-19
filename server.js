@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const register = require("./router/register");
+const login = require("./router/login");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,12 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Login Route
-app.post("/api/login", (req, res) => {
-  const { email, password } = req.body;
-  console.log({ email, password });
-
-  res.status(201).send();
-});
+app.use("/", login);
 
 // Register Route
 app.use("/", register);
