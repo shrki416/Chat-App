@@ -3,14 +3,21 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import loginImage from "../../assets/login.svg";
 
-function Login() {
+function Login({ auth }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    const data = { email, password };
-    axios.post("/api/login", data);
+
+    try {
+      const body = { email, password };
+      const response = await axios.post("/api/login", body);
+      localStorage.setItem("token", response.data.token);
+      auth(true);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   return (
