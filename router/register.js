@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 
 router.post("/register", validate, async (req, res) => {
   try {
-    const { first_name, last_name, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     const user = await pool.query("SELECT * FROM users WHERE email = $1", [
       email,
@@ -20,8 +20,8 @@ router.post("/register", validate, async (req, res) => {
     const bcryptPassword = await bcrypt.hash(password, salt);
 
     let newUser = await pool.query(
-      "INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING *",
-      [first_name, last_name, email, bcryptPassword]
+      "INSERT INTO users (firstName, lastName, email, password) VALUES ($1, $2, $3, $4) RETURNING *",
+      [firstName, lastName, email, bcryptPassword]
     );
 
     const token = jwtGenerator(newUser.rows[0].id);
