@@ -12,14 +12,10 @@ app.use(express.static(path.join(__dirname, "client/build")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Login Route
-app.use("/", login);
-
-// Register Route
-app.use("/", register);
-
-// Verify user Route
-app.use("/", verify);
+// Authentication Routes
+app.use("/api", login);
+app.use("/api", register);
+app.use("/api", verify);
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
