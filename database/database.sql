@@ -12,4 +12,4 @@ CREATE TABLE users(
 ALTER TABLE users RENAME COLUMN first_name TO firstName;
 ALTER TABLE users RENAME COLUMN last_name TO lastName;
 
-INSERT INTO users (first_name, last_name, email, password) VALUES ('John', 'Smith', 'john@gmail.com', 'password');
+INSERT INTO users (firstName, lastName, email, password) VALUES ('John', 'Smith', 'john@gmail.com', 'password');
