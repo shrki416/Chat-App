@@ -1,0 +1,68 @@
+@import "../../App.css";
+
+#navbar {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  background-color: var(--bg-main);
+  padding: 0 10px;
+}
+#navbar h2 {
+  display: flex;
+  align-self: center;
+  color: white;
+}
+#navbar .fa-icon {
+  color: white;
+  margin-left: 5px;
+}
+#navbar #profile-menu {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+}
+#navbar #profile-menu p {
+  display: flex;
+  align-self: center;
+  color: white;
+}
+#navbar #profile-menu img {
+  display: flex;
+  color: white;
+  align-self: center;
+  margin-right: 5px;
+  border-radius: 20px;
+}
+#navbar #profile-menu #profile-options {
+  position: absolute;
+  top: 50px;
+  border-radius: 5px;
+  padding: 0 5px;
+  right: 5px;
+  border: 1px solid #d9d9d9;
+  background-color: white;
+  z-index: 9999;
+}
+#navbar #profile-menu #profile-options p {
+  margin: 10px 5px;
+  color: black;
+}
+#navbar #profile-menu form .input-field input,
+#navbar #profile-menu form .input-field select {
+  height: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+#navbar #profile-menu .btn-success {
+  background-color: var(--bg-sucess);
+  border: none;
+  padding: 5px;
+  width: 70px;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
