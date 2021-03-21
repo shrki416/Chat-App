@@ -10,33 +10,26 @@ import axios from "axios";
 const App = () => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
 
-  const authenticateUser = (Boolean) => setIsUserAuthenticated(Boolean);
+  // const authenticateUser = (Boolean) => setIsUserAuthenticated(Boolean);
 
-  const userAuth = async () => {
-    try {
-      const response = await axios.get("/api/verify");
-      response ? setIsUserAuthenticated(true) : setIsUserAuthenticated(false);
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
+  // const userAuth = async () => {
+  //   try {
+  //     const response = await axios.get("/api/verify");
+  //     response ? setIsUserAuthenticated(true) : setIsUserAuthenticated(false);
+  //   } catch (error) {
+  //     console.error(error.message);
+  //   }
+  // };
 
-  useEffect(() => authenticateUser(), []);
+  // useEffect(() => authenticateUser(), []);
 
   return (
     <Router>
       <div className="App">
         <Switch>
-          <Route exact path="/" component={Chat} auth={authenticateUser} />
-          {!isUserAuthenticated ? (
-            <Route path="/login" component={Login} auth={authenticateUser} />
-          ) : (
-            <Route
-              path="/register"
-              component={Register}
-              auth={authenticateUser}
-            />
-          )}
+          <Route exact path="/" component={Chat} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
           <Route render={() => <h1>404 page not found</h1>} />
         </Switch>
       </div>
