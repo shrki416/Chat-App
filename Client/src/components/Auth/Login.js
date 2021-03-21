@@ -14,7 +14,7 @@ function Login({ auth }) {
       const body = { email, password };
       const response = await axios.post("/api/login", body);
       localStorage.setItem("token", response.data.token);
-      auth(true);
+      // auth(true);
     } catch (error) {
       console.error(error.message);
     }
