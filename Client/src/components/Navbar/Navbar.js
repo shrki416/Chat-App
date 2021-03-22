@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Navbar.css";
 
-function Navbar() {
+function Navbar({ auth }) {
   const [name, setName] = useState("");
 
   const getUserProfile = async () => {
@@ -22,14 +22,21 @@ function Navbar() {
 
   const { firstname, lastname } = name;
 
+  const logout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    // auth(false);
+  };
+
   useEffect(() => getUserProfile(), []);
   return (
     <div id="navbar" className="card-shadow">
       <h2>Chat-App</h2>
       {/* <img height="40px" width="40px" src={FaUser} alt="Avatar" /> */}
       <p>
-        {lastname}, {firstname}
+        Welcome: {lastname}, {firstname}
       </p>
+      {/* <button onClick={(e) => logout(e)}>LOGOUT</button>s */}
     </div>
   );
 }
