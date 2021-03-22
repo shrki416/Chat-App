@@ -17,7 +17,7 @@ function Register({ auth }) {
       const body = { firstName, lastName, email, password };
       const response = await axios.post("/api/register", body);
       localStorage.setItem("token", response.data.token);
-      // auth(true);
+      auth(true);
     } catch (error) {
       console.error(error.message);
     }
