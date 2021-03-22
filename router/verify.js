@@ -4,7 +4,6 @@ const auth = require("../middleware/auth");
 router.get("/verify", auth, async (req, res) => {
   try {
     res.json(true);
-    console.log("hello");
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");
