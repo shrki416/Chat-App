@@ -14,9 +14,18 @@
   color: white;
 }
 
-#navbar .fa-icon {
+#navbar button {
+  width: auto;
+  height: auto;
+  background-color: var(--bg-main);
+  border: none;
   color: white;
-  margin-left: 5px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#navbar p {
+  color: var(--bg-gray);
 }
 
 #navbar #profile-menu {
