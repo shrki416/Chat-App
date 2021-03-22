@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import FaUser from "react-icons/fa";
 import axios from "axios";
 import "./Navbar.css";
 
@@ -25,18 +24,19 @@ function Navbar({ auth }) {
   const logout = (e) => {
     e.preventDefault();
     localStorage.removeItem("token");
-    // auth(false);
+    auth(false);
   };
 
   useEffect(() => getUserProfile(), []);
+
   return (
     <div id="navbar" className="card-shadow">
       <h2>Chat-App</h2>
-      {/* <img height="40px" width="40px" src={FaUser} alt="Avatar" /> */}
+      {/* <img height="40px" width="40px" src={image} alt="Avatar" /> */}
       <p>
-        Welcome: {lastname}, {firstname}
+        Welcome, {firstname} {lastname}!
       </p>
-      {/* <button onClick={(e) => logout(e)}>LOGOUT</button>s */}
+      <button onClick={(e) => logout(e)}>LOGOUT</button>
     </div>
   );
 }
