@@ -4,7 +4,7 @@ import axios from "axios";
 import registerImage from "../../assets/register.svg";
 import "./Auth.css";
 
-function Register({ auth }) {
+function Register() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,7 +17,6 @@ function Register({ auth }) {
       const body = { firstName, lastName, email, password };
       const response = await axios.post("/api/register", body);
       localStorage.setItem("token", response.data.token);
-      // auth(true);
     } catch (error) {
       console.error(error.message);
     }
