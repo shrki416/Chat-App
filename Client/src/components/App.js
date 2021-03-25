@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Login from "../components/Auth/Login";
 import Register from "../components/Auth/Register";
-import Chat from "../components/Chat";
+import Chat from "./Chat/Chat";
 import {
   BrowserRouter as Router,
   Route,
@@ -61,7 +61,7 @@ const App = () => {
             path="/register"
             render={(props) =>
               !isUserAuthenticated ? (
-                <Register {...props} auth={authenticateUser} />
+                <Register {...props} />
               ) : (
                 <Redirect to="/login" />
               )
