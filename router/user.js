@@ -5,7 +5,7 @@ const auth = require("../middleware/auth");
 router.get("/user", auth, async (req, res) => {
   try {
     const user = await pool.query(
-      "SELECT firstName, lastName, email from users WHERE id=$1",
+      "SELECT firstName, lastName, email, id from users WHERE id=$1",
       [req.user]
     );
     res.json(user.rows[0]);
