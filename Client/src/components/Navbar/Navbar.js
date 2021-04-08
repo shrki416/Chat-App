@@ -13,9 +13,7 @@ function Navbar({ auth }) {
         },
       };
 
-      await axios.get("/api/user", config).then((res) => {
-        setName(res.data);
-      });
+      await axios.get("/api/user", config).then((res) => setName(res.data));
     } catch (error) {
       console.error(error.message);
     }
