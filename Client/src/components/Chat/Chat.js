@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../Navbar/Navbar";
 import socketIOClient from "socket.io-client";
 import axios from "axios";
+import "./Chat.css";
 
 const ENDPOINT = "http://localhost:3000";
 
@@ -11,8 +12,9 @@ const Chat = ({ auth }) => {
   const [contact, setContact] = useState("");
   const socket_ptr = useRef(null);
   const login_ptr = useRef({});
+
   useEffect(() => {
-    var socket = socketIOClient(ENDPOINT);
+    const socket = socketIOClient(ENDPOINT);
     socket.on("message", (data) => {
       console.log("Server Message", data);
       setMessage(data);
@@ -34,13 +36,11 @@ const Chat = ({ auth }) => {
       }
     });
 
-    socket.on("room", (data) => {
-      console.log("Room Message", data);
-    });
+    socket.on("room", (data) => console.log("Room Message", data));
 
-    socket.on("server", (data) => {
-      setMessage(data.message + ", From : " + data.from);
-    });
+    socket.on("server", (data) =>
+      setMessage(`${data.message}, From : ${data.from}`)
+    );
 
     socket_ptr.current = socket;
   }, []);
@@ -59,11 +59,76 @@ const Chat = ({ auth }) => {
     <>
       <Navbar auth={auth} />
 
-      {/* <Users /> */}
-      {/* <Messages /> */}
-      <p>It is message from Server {message}</p>
+      <section className="msger">
+        <header classNameName="msger-header">
+          <div classNameName="msger-header-title">
+            <i classNameName="fas fa-comment-alt"></i> SimpleChat
+          </div>
+          <div classNameName="msger-header-options">
+            <span>
+              <i classNameName="fas fa-cog"></i>
+            </span>
+          </div>
+        </header>
 
-      <div className="input-field">
+        <main classNameName="msger-chat">
+          <div classNameName="msg left-msg">
+            <div
+              classNameName="msg-img"
+              // style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"
+            ></div>
+
+            <div classNameName="msg-bubble">
+              <div classNameName="msg-info">
+                <div classNameName="msg-info-name">BOT</div>
+                <div classNameName="msg-info-time">12:45</div>
+              </div>
+
+              <div classNameName="msg-text">
+                Hi, welcome to SimpleChat! Go ahead and send me a message. 😄
+              </div>
+            </div>
+          </div>
+
+          <div classNameName="msg right-msg">
+            <div
+              classNameName="msg-img"
+              // style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"
+            ></div>
+
+            <div classNameName="msg-bubble">
+              <div classNameName="msg-info">
+                <div classNameName="msg-info-name">Sajad</div>
+                <div classNameName="msg-info-time">12:46</div>
+              </div>
+
+              <div classNameName="msg-text">
+                You can change your name in JS section!
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <form className="msger-inputarea">
+          <input
+            type="text"
+            className="msger-input"
+            placeholder="Enter your message..."
+          />
+          <button
+            className="msger-send-btn"
+            onClick={() => {
+              onSendMessage();
+            }}
+          >
+            Send
+          </button>
+        </form>
+      </section>
+
+      {/* <p>It is message from Server {message}</p>
+
+      <div classNameNameName="input-field">
         <input
           onChange={(e) => setText(e.target.value)}
           value={text}
@@ -73,7 +138,7 @@ const Chat = ({ auth }) => {
         />
       </div>
 
-      <div className="input-field">
+      <div classNameNameName="input-field">
         <input
           onChange={(e) => setContact(e.target.value)}
           value={contact}
@@ -89,7 +154,7 @@ const Chat = ({ auth }) => {
         }}
       >
         Echo Send
-      </button>
+      </button> */}
     </>
   );
 };
