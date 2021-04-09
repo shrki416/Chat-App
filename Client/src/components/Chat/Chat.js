@@ -60,51 +60,34 @@ const Chat = ({ auth }) => {
       <Navbar auth={auth} />
 
       <section className="msger">
-        <header classNameName="msger-header">
-          <div classNameName="msger-header-title">
-            <i classNameName="fas fa-comment-alt"></i> SimpleChat
-          </div>
-          <div classNameName="msger-header-options">
-            <span>
-              <i classNameName="fas fa-cog"></i>
-            </span>
+        <header className="msger-header">
+          <div className="msger-header-title">
+            <i className="fas fa-comment-alt"></i> Chat
           </div>
         </header>
 
-        <main classNameName="msger-chat">
-          <div classNameName="msg left-msg">
-            <div
-              classNameName="msg-img"
-              // style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"
-            ></div>
-
-            <div classNameName="msg-bubble">
-              <div classNameName="msg-info">
-                <div classNameName="msg-info-name">BOT</div>
-                <div classNameName="msg-info-time">12:45</div>
+        <main className="msger-chat">
+          <div className="msg left-msg">
+            <div className="msg-bubble">
+              <div className="msg-info">
+                <div className="msg-info-name">Arya Stark</div>
+                <div className="msg-info-time">12:45</div>
               </div>
 
-              <div classNameName="msg-text">
-                Hi, welcome to SimpleChat! Go ahead and send me a message. 😄
+              <div className="msg-text">
+                Hi, when are you coming to King's Landing?
               </div>
             </div>
           </div>
 
-          <div classNameName="msg right-msg">
-            <div
-              classNameName="msg-img"
-              // style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"
-            ></div>
-
-            <div classNameName="msg-bubble">
-              <div classNameName="msg-info">
-                <div classNameName="msg-info-name">Sajad</div>
-                <div classNameName="msg-info-time">12:46</div>
+          <div className="msg right-msg">
+            <div className="msg-bubble">
+              <div className="msg-info">
+                <div className="msg-info-name">John Snow</div>
+                <div className="msg-info-time">12:46</div>
               </div>
 
-              <div classNameName="msg-text">
-                You can change your name in JS section!
-              </div>
+              <div className="msg-text">Never</div>
             </div>
           </div>
         </main>
@@ -128,7 +111,7 @@ const Chat = ({ auth }) => {
 
       {/* <p>It is message from Server {message}</p>
 
-      <div classNameNameName="input-field">
+      <div classNameName="input-field">
         <input
           onChange={(e) => setText(e.target.value)}
           value={text}
@@ -138,7 +121,7 @@ const Chat = ({ auth }) => {
         />
       </div>
 
-      <div classNameNameName="input-field">
+      <div classNameName="input-field">
         <input
           onChange={(e) => setContact(e.target.value)}
           value={contact}
