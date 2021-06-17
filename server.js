@@ -10,13 +10,16 @@ const app = express();
 
 const http = require("http");
 const server = http.createServer(app);
-const socketIO = require("socket.io");
-const io = socketIO(server);
+// const socketIO = require("socket.io");
+// const io = socketIO(server);
+
+const { Server } = require("socket.io");
+const io = new Server();
 
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, "client/build")));
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Authentication Routes
