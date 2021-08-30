@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 const register = require("./router/register");
 const login = require("./router/login");
 const verify = require("./router/verify");
@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // Authentication Routes
 app.use("/api", login);
