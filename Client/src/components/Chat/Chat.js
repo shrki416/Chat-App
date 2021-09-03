@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../Navbar/Navbar";
+import SendIcon from "@material-ui/icons/Send";
 
 import "./Chat.css";
 
@@ -7,6 +8,7 @@ const Chat = ({ auth }) => {
   return (
     <>
       <Navbar auth={auth} />
+
       <div className="chat-container">
         <main className="chat-main">
           <div className="chat-sidebar">

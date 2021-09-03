@@ -26,6 +26,7 @@
 
 #navbar p {
   color: var(--bg-gray);
+  align-self: center;
 }
 
 #navbar #profile-menu {
