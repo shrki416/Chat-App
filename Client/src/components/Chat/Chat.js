@@ -1,13 +1,49 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import SendIcon from "@material-ui/icons/Send";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import IconButton from "@material-ui/core/IconButton";
+
+import { io } from "socket.io-client";
+import axios from "axios";
 
 import "./Chat.css";
 
 const Chat = ({ auth }) => {
+  const [message, setMessage] = useState("");
+  const [input, setInput] = useState("");
+
+  const socket = io();
+
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("connected to server", socket.id);
+    });
+
+    socket.on("recieve-message", (message) => {
+      setMessage(message);
+    });
+  }, []);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    console.log("form submitted");
+    console.log(input);
+
+    const messages = {
+      message,
+    };
+
+    axios.post("/api/message", {
+      messages,
+    });
+
+    socket.emit("chat-message", messages);
+    setMessage("");
+  }
+
   return (
     <>
       <Navbar auth={auth} />
@@ -161,10 +197,17 @@ const Chat = ({ auth }) => {
               </div>
             </div>
           </div>
-          <div id="chat-form">
-            <input type="text" placeholder="type a message..." />
-            <SendIcon alt="send message" id="send-icon" />
-          </div>
+          <form id="chat-form" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              value={input}
+              placeholder="type a message..."
+              onChange={(e) => setInput(e.target.value)}
+            />
+            <IconButton onClick={handleSubmit}>
+              <SendIcon alt="send message" id="send-icon" />
+            </IconButton>
+          </form>
         </div>
       </div>
     </>
