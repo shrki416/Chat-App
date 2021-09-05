@@ -17,8 +17,6 @@ body {
 }
 
 html {
-  /* font-family: "JetBrainsMono-Regular", Helvetica, sans-serif; */
-  background: url("./assets/cool-background.png");
   background: var(--bg-grey);
   font-size: 10px;
 }
