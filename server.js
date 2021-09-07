@@ -23,6 +23,30 @@ app.use("/api", register);
 app.use("/api", verify);
 app.use("/api", user);
 
+// const io = socket(server);
+
+// io.on("connection", socket => {
+//   console.log('socket connected');
+// });
+
+// app.post("/api/messages", async (req, res) => {
+//   try {
+//     // const userId = req.params;
+//     const chatMessage = req.body;
+
+//     const newMessage = await pool.query(
+//       "INSERT INTO users(messages) VALUES($1) RETURNING *",
+//       [chatMessage]
+//     );
+
+//     socket.emit('message-key', "some data goes here");
+
+//     res.json(newMessage.rows[0]);
+//   } catch (err) {
+//     res.status(500).send(err.message);
+//   }
+// });
+
 io.on("connection", (socket) => {
   console.log("New client connected");
 
@@ -35,7 +59,8 @@ io.on("connection", (socket) => {
 });
 
 app.post("/api/message", (req, res) => {
-  console.log(req.body.message);
+  console.table(req.body);
+  // console.log(req.body.data);
 });
 
 app.get("/*", (req, res) => {
