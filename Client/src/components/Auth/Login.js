@@ -53,11 +53,10 @@ function Login({ auth }) {
               </div>
 
               <button>LOGIN</button>
+              <h3>
+                Don't have an account? <Link to="/register">REGISTER</Link>
+              </h3>
             </form>
-
-            <p>
-              Don't have an account? <Link to="/register">REGISTER</Link>
-            </p>
           </div>
         </div>
       </div>
