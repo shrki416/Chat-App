@@ -167,7 +167,7 @@
   cursor: pointer;
 } */
 
-#chat-message-list {
+/* #chat-message-list {
   grid-area: chat-message-list;
   display: flex;
   flex-direction: column-reverse;
@@ -195,7 +195,7 @@
 
 .other-message {
   justify-items: start;
-}
+} */
 
 /* .other-message .message-content {
   grid-template-columns: 48px 1fr;
@@ -207,7 +207,7 @@
   grid-row: span 2;
 } */
 
-.message-time {
+/* .message-time {
   font-size: 1.3rem;
   color: #777;
 }
@@ -230,7 +230,7 @@
   color: #111;
   border: 1px solid #ddd;
   border-radius: 14px 14px 14px 0;
-}
+} */
 
 /* #chat-form {
   display: grid; */
