@@ -75,11 +75,10 @@ function Register() {
               </div>
 
               <button>REGISTER</button>
+              <h3>
+                Already have an account? <Link to="/login">LOGIN</Link>
+              </h3>
             </form>
-
-            <p>
-              Already have an account? <Link to="/login">LOGIN</Link>
-            </p>
           </div>
         </div>
       </div>
