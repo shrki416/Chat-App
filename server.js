@@ -60,7 +60,6 @@ io.on("connection", (socket) => {
 
 app.post("/api/message", (req, res) => {
   console.table(req.body);
-  // console.log(req.body.data);
 });
 
 app.get("/*", (req, res) => {
