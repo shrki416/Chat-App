@@ -232,10 +232,10 @@
   border-radius: 14px 14px 14px 0;
 }
 
-#chat-form {
-  display: grid;
-  /* grid: 51px / 32px 1fr; */
-  grid: 51px / 1fr 51px;
+/* #chat-form {
+  display: grid; */
+/* grid: 51px / 32px 1fr; */
+/* grid: 51px / 1fr 51px;
   align-content: center;
   align-items: center;
   grid-gap: 15px;
@@ -244,16 +244,16 @@
   border-top: 1px solid rgba(0, 0, 0, 0.25);
   padding-left: 42px;
   padding-right: 22px;
-}
+} */
 
-#chat-form input {
+/* #chat-form input {
   outline: none;
   padding: 15px;
   border: 2px solid #ddd;
   color: #330;
   border-radius: 6px;
   font-size: 1.4rem;
-}
+} */
 
 ::-webkit-scrollbar {
   display: none;
