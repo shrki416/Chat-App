@@ -9,6 +9,7 @@
   justify-content: center;
 }
 #auth-container #auth-card > div {
+  align-items: center;
   display: flex;
   flex-direction: column;
   min-width: 100%;
@@ -36,7 +37,7 @@
   }
 }
 #auth-container #auth-card > div #image-section img {
-  max-height: 300px;
+  max-height: 400px;
   max-width: 100%;
 }
 #auth-container #auth-card > div #form-section {
@@ -58,6 +59,7 @@
   height: 40px;
   width: 100%;
   box-sizing: border-box;
+  padding-left: 5px;
 }
 #auth-container #auth-card > div #form-section form button {
   width: 100%;
@@ -67,4 +69,5 @@
   color: white;
   cursor: pointer;
   font-weight: 600;
+  /* margin-bottom: 20px; */
 }
