@@ -1,48 +1,63 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
-import SendIcon from "@material-ui/icons/Send";
+
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import IconButton from "@material-ui/core/IconButton";
 
 import { io } from "socket.io-client";
 import axios from "axios";
 
 import "./Chat.css";
+import ChatForm from "./Chat Form/ChatForm";
 
 const Chat = ({ auth }) => {
-  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState("");
   const [input, setInput] = useState("");
+  const [name, setName] = useState("");
 
   const socket = io();
 
   useEffect(() => {
+    getUserProfile();
     socket.on("connect", () => {
       console.log("connected to server", socket.id);
     });
 
     socket.on("recieve-message", (message) => {
-      setMessage(message);
+      setMessages((messages) => [...messages, message]);
     });
   }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("form submitted");
-    console.log(input);
 
-    const messages = {
-      message,
+    const data = {
+      message: input,
     };
 
-    axios.post("/api/message", {
-      messages,
-    });
-
-    socket.emit("chat-message", messages);
-    setMessage("");
+    axios.post("/api/message", data);
+    socket.emit("chat-message", data);
+    setInput("");
   }
+
+  const getUserProfile = async () => {
+    try {
+      const config = {
+        headers: {
+          token: localStorage.token,
+        },
+      };
+
+      await axios.get("/api/user", config).then((res) => setName(res.data));
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  const { firstname, lastname } = name;
+
+  console.log(`🍌`, messages);
 
   return (
     <>
@@ -123,7 +138,9 @@ const Chat = ({ auth }) => {
             <AddCircleIcon fontSize="large" id="add-icon" />
           </div>
           <div id="chat-title">
-            <span>Jon Snow</span>
+            <span>
+              {firstname} {lastname}
+            </span>
             <DeleteIcon fontSize="large" id="delete-icon" />
           </div>
           <div id="chat-message-list">
@@ -197,17 +214,11 @@ const Chat = ({ auth }) => {
               </div>
             </div>
           </div>
-          <form id="chat-form" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              value={input}
-              placeholder="type a message..."
-              onChange={(e) => setInput(e.target.value)}
-            />
-            <IconButton onClick={handleSubmit}>
-              <SendIcon alt="send message" id="send-icon" />
-            </IconButton>
-          </form>
+          <ChatForm
+            handleSubmit={handleSubmit}
+            setInput={setInput}
+            input={input}
+          />
         </div>
       </div>
     </>
