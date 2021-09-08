@@ -10,7 +10,7 @@ import axios from "axios";
 
 import "./Chat.css";
 import ChatForm from "./Chat Form/ChatForm";
-import ChatMessage from "./Chat Message/ChatMessage";
+import ChatMessage from "./Chat Messages/ChatMessages";
 
 const Chat = ({ auth }) => {
   const [messages, setMessages] = useState("");
@@ -42,7 +42,7 @@ const Chat = ({ auth }) => {
     setInput("");
   }
 
-  const getUserProfile = async () => {
+  async function getUserProfile() {
     try {
       const config = {
         headers: {
@@ -54,9 +54,10 @@ const Chat = ({ auth }) => {
     } catch (error) {
       console.error(error.message);
     }
-  };
+  }
 
   const { firstname, lastname } = name;
+  console.log(messages);
 
   return (
     <>

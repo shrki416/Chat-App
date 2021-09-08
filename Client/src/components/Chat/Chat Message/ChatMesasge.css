@@ -1,13 +1,5 @@
 @import "../Chat.css";
 
-#chat-message-list {
-  grid-area: chat-message-list;
-  display: flex;
-  flex-direction: column-reverse;
-  padding: 0 20px;
-  overflow-y: scroll;
-}
-
 .message-row {
   display: grid;
   grid-template-columns: 70%;
@@ -31,14 +23,14 @@
 }
 
 /* .other-message .message-content {
-    grid-template-columns: 48px 1fr;
-    grid-column-gap: 5px;
-  } */
+      grid-template-columns: 48px 1fr;
+      grid-column-gap: 5px;
+    } */
 
 /* .message-row img {
-    border-radius: 100%;
-    grid-row: span 2;
-  } */
+      border-radius: 100%;
+      grid-row: span 2;
+    } */
 
 .message-time {
   font-size: 1.3rem;
