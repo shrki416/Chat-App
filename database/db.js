@@ -12,8 +12,7 @@ const pool = new Pool({
 pool
   .connect()
   .then(() => console.log("👌 connected to database 👌"))
-  .catch((err) => console.log(err))
-  .finally(() => pool.end());
+  .catch((err) => console.log(err));
 
 // const query = `SELECT * FROM users`;
 
