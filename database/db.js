@@ -9,4 +9,18 @@ const pool = new Pool({
   port: 5432,
 });
 
+pool
+  .connect()
+  .then(() => console.log("👌 connected to database 👌"))
+  .catch((err) => console.log(err))
+  .finally(() => pool.end());
+
+// const query = `SELECT * FROM users`;
+
+// pool.query(query, (err, res) => {
+//   if (err) console.log(err);
+//   console.log(res.rows);
+//   pool.end();
+// });
+
 module.exports = pool;
