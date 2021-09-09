@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import registerImage from "../../assets/register.svg";
 import "./Auth.css";
@@ -9,6 +9,8 @@ function Register() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const history = useHistory();
 
   const submit = async (e) => {
     e.preventDefault();
@@ -20,6 +22,7 @@ function Register() {
     } catch (error) {
       console.error(error.message);
     }
+    history.push("/login");
   };
 
   return (

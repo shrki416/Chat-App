@@ -11,6 +11,9 @@ import {
 import "../App.css";
 import axios from "axios";
 
+const AUTH_TOKEN = localStorage.getItem("token");
+axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+
 const App = () => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
 
@@ -18,10 +21,11 @@ const App = () => {
 
   const userAuth = async () => {
     try {
-      const config = {
-        headers: { token: localStorage.token },
-      };
-      const response = await axios.get("/api/verify", config);
+      // const config = {
+      //   headers: { token: localStorage.token },
+      // };
+      // const response = await axios.get("/api/verify", config);
+      const response = await axios.get("/api/verify");
       response ? setIsUserAuthenticated(true) : setIsUserAuthenticated(false);
     } catch (error) {
       console.error(error.message);
