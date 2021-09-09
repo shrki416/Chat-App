@@ -47,19 +47,28 @@ app.use("/api", user);
 //   }
 // });
 
-io.on("connection", (socket) => {
-  console.log("New client connected");
-
-  socket.on("chat-message", (message) => {
-    console.log(message);
-    socket.broadcast.emit("recieve-message", message);
-  });
-
-  socket.on("disconnect", () => console.log("Client disconnected"));
+io.on("connection", () => {
+  console.log("New Client connected");
 });
 
+io.on("disconnect", () => {
+  console.log("Client disconnected");
+});
+
+// socket.on("chat-message", (message) => {
+//   console.log(message);
+//   socket.broadcast.emit("recieve-message", message);
+// });
+
 app.post("/api/message", (req, res) => {
+  res.send("hello");
+  // try {
   console.table(req.body);
+
+  io.emit("chat-message", req.body);
+  // } catch (error) {
+  //   res.status(500).send(error.message);
+  // }
 });
 
 app.get("/*", (req, res) => {
