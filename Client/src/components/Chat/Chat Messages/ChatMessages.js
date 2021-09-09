@@ -6,36 +6,34 @@ import "./ChatMessages.css";
 const messageList = [
   {
     id: 1,
-    message: "Ok then",
+    message: "How are Bran and Sansa?",
     time: "Apr 16",
   },
   {
     id: 2,
-    message:
-      "Yeah I think it's best we do that. Otherwise things won't work well at all. I'm adding more text here to test the sizing of the speech bubble and the wrapping of it too.",
+    message: "Maybe",
     time: "Apr 16",
   },
   {
     id: 3,
-    message: "Maybe we can use Jim's studio.",
+    message: "Maybe she just wants to get better",
     time: "Apr 15",
   },
   {
     id: 4,
     message:
-      "All I know is where I live it's too hard to record because of all the street noise.",
+      "I don't think so.  As a matter of fact she is training at the moment back in WinterFell.. I don't know why she is training so much, oh well!",
     time: "Apr 16",
   },
   {
     id: 5,
-    message:
-      "Well we need to work out sometime soon where we really want to record our video course.",
+    message: "I know me too.  We can go whenever.  Is Arya going?",
     time: "Apr 15",
   },
   {
     id: 6,
     message:
-      "I'm just in the process of finishing off the last pieces of material for the course.",
+      "When are we going to King's Landing? I need to see Cersei.. I can't stand the Lanestors",
     time: "Apr 14",
   },
   {
@@ -50,7 +48,7 @@ const messageList = [
   },
   {
     id: 9,
-    message: "Hey Daryl?",
+    message: "Hey Jon?",
     time: "Apr 13",
   },
 ];

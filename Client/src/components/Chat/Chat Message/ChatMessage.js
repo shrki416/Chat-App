@@ -3,7 +3,7 @@ import React from "react";
 import "./ChatMesasge.css";
 
 function ChatMessage({ message }) {
-  const chatBubbles = message.id % 2 === 0 ? "other-message" : "you-message";
+  const chatBubbles = message.id % 2 === 0 ? "you-message" : "other-message";
 
   return (
     <div className={`message-row ${chatBubbles}`}>
