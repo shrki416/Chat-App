@@ -1,9 +1,17 @@
 @import "../Chat.css";
+/* 
+#chat-message-list {
+  grid-area: chat-message-list;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  overflow-y: scroll;
+} */
 
 #chat-message-list {
   grid-area: chat-message-list;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   padding: 0 20px;
   overflow-y: scroll;
 }
