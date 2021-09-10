@@ -23,16 +23,17 @@
 }
 
 /* .other-message .message-content {
-      grid-template-columns: 48px 1fr;
-      grid-column-gap: 5px;
-    } */
+  grid-template-columns: 48px 1fr;
+  grid-column-gap: 5px;
+} */
 
 /* .message-row img {
-      border-radius: 100%;
-      grid-row: span 2;
-    } */
+  border-radius: 100%;
+  grid-row: span 2;
+} */
 
-.message-time {
+.message-date,
+.user-stamp {
   font-size: 1.3rem;
   color: #777;
 }
@@ -44,15 +45,15 @@
 }
 
 .you-message .message-text {
-  background: #0048aa;
+  background: var(--bg-main);
   color: #eee;
-  border: 1px solid #0048aa;
+  border: 1px solid var(--bg-gray);
   border-radius: 14px 14px 0 14px;
 }
 
 .other-message .message-text {
   background: #eee;
   color: #111;
-  border: 1px solid #ddd;
+  border: 1px solid var(--bg-main);
   border-radius: 14px 14px 14px 0;
 }
