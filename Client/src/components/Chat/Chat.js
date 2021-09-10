@@ -10,35 +10,38 @@ import axios from "axios";
 
 import "./Chat.css";
 import ChatForm from "./Chat Form/ChatForm";
-import ChatMessage from "./Chat Messages/ChatMessages";
+import ChatMessages from "./Chat Messages/ChatMessages";
 
 const Chat = ({ auth }) => {
-  const [messages, setMessages] = useState("");
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [name, setName] = useState("");
+  const [user, setUser] = useState("");
 
   const socket = io();
 
   useEffect(() => {
-    getUserProfile();
     socket.on("connect", () => {
       console.log("connected to server", socket.id);
     });
 
-    socket.on("recieve-message", (message) => {
+    socket.emit("recieve-message", (message) => {
       setMessages((messages) => [...messages, message]);
     });
+
+    getUserProfile();
+    getMessages();
   }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     const data = {
+      userId: id,
       message: input,
     };
 
     axios.post("/api/message", data);
-    socket.emit("chat-message", data);
+    socket.emit("recieve-message", data);
     setInput("");
   }
 
@@ -50,14 +53,22 @@ const Chat = ({ auth }) => {
         },
       };
 
-      await axios.get("/api/user", config).then((res) => setName(res.data));
+      await axios.get("/api/user", config).then((res) => setUser(res.data));
     } catch (error) {
       console.error(error.message);
     }
   }
 
-  const { firstname, lastname } = name;
-  console.log(messages);
+  async function getMessages() {
+    try {
+      await axios.get("/api/message").then((res) => setMessages(res.data));
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  const { firstname, lastname, id } = user;
+  console.table(messages);
 
   return (
     <>
@@ -143,7 +154,7 @@ const Chat = ({ auth }) => {
             </span>
             <DeleteIcon fontSize="large" id="delete-icon" />
           </div>
-          <ChatMessage />
+          <ChatMessages messageList={messages} user={user} />
           <ChatForm
             handleSubmit={handleSubmit}
             setInput={setInput}
