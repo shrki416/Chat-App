@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../Navbar/Navbar";
 
 import AddCircleIcon from "@material-ui/icons/AddCircle";
@@ -24,7 +24,7 @@ const Chat = ({ auth }) => {
       console.log("connected to server", socket.id);
     });
 
-    socket.emit("recieve-message", (message) => {
+    socket.on("message", (message) => {
       setMessages((messages) => [...messages, message]);
     });
 
@@ -41,7 +41,7 @@ const Chat = ({ auth }) => {
     };
 
     axios.post("/api/message", data);
-    socket.emit("recieve-message", data);
+    socket.emit("message", data);
     setInput("");
   }
 
@@ -68,7 +68,6 @@ const Chat = ({ auth }) => {
   }
 
   const { firstname, lastname, id } = user;
-  console.table(messages);
 
   return (
     <>
