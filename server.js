@@ -48,18 +48,16 @@ app.use("/api", user);
 //   }
 // });
 
-io.on("connection", () => {
-  console.log("New Client connected");
-});
+// io.on("connection", (socket) => {
+//   socket.on("chat-message", (message) => {
+//     console.log(message);
+//     socket.broadcast.emit("message", message);
+//   });
+// });
 
 io.on("disconnect", () => {
   console.log("Client disconnected");
 });
-
-// socket.on("chat-message", (message) => {
-//   console.log(message);
-//   socket.broadcast.emit("recieve-message", message);
-// });
 
 app.get("/api/message", async (req, res) => {
   try {
@@ -79,7 +77,7 @@ app.post("/api/message", async (req, res) => {
       [userId, message]
     );
 
-    io.emit("receive-message", createMessage.rows[0]);
+    io.emit("message", createMessage.rows[0]);
   } catch (error) {
     res.status(500).send(error.message);
   }
