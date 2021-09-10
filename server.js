@@ -6,6 +6,7 @@ const verify = require("./router/verify");
 const user = require("./router/user");
 const socket = require("socket.io");
 const http = require("http");
+const pool = require("./database/db");
 
 const PORT = process.env.PORT || 3000;
 
@@ -60,15 +61,28 @@ io.on("disconnect", () => {
 //   socket.broadcast.emit("recieve-message", message);
 // });
 
-app.post("/api/message", (req, res) => {
-  res.send("hello");
-  // try {
-  console.table(req.body);
+app.get("/api/message", async (req, res) => {
+  try {
+    const messages = await pool.query("SELECT * FROM messages");
+    res.send(messages.rows);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 
-  io.emit("chat-message", req.body);
-  // } catch (error) {
-  //   res.status(500).send(error.message);
-  // }
+app.post("/api/message", async (req, res) => {
+  try {
+    const { userId, message } = req.body;
+
+    const createMessage = await pool.query(
+      `INSERT INTO messages(user_id, message) VALUES($1, $2) RETURNING *`,
+      [userId, message]
+    );
+
+    io.emit("receive-message", createMessage.rows[0]);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 });
 
 app.get("/*", (req, res) => {
