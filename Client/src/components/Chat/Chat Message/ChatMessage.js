@@ -1,9 +1,8 @@
-import React, { useRef, useEffect } from "react";
+import React, { useCallback } from "react";
 
 import "./ChatMesasge.css";
 
 function ChatMessage({ message, user }) {
-  const lastMessage = useRef(null);
   const id = message.user_id;
   const chatBubbles = user.id === id ? "you-message" : "other-message";
 
@@ -20,14 +19,12 @@ function ChatMessage({ message, user }) {
     return messageDate.toLocaleDateString("en-US", options);
   };
 
-  useEffect(() => {
-    if (lastMessage.current) {
-      lastMessage.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [lastMessage]);
+  const setRef = useCallback((node) => {
+    if (node) node.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   return (
-    <div className={`message-row ${chatBubbles}`} ref={lastMessage}>
+    <div className={`message-row ${chatBubbles}`} ref={setRef}>
       <div className="message-content">
         <div className="message-text card-shadow">{message.message}</div>
         <div className="message-date">
