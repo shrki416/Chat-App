@@ -24,37 +24,6 @@ app.use("/api", register);
 app.use("/api", verify);
 app.use("/api", user);
 
-// const io = socket(server);
-
-// io.on("connection", socket => {
-//   console.log('socket connected');
-// });
-
-// app.post("/api/messages", async (req, res) => {
-//   try {
-//     // const userId = req.params;
-//     const chatMessage = req.body;
-
-//     const newMessage = await pool.query(
-//       "INSERT INTO users(messages) VALUES($1) RETURNING *",
-//       [chatMessage]
-//     );
-
-//     socket.emit('message-key', "some data goes here");
-
-//     res.json(newMessage.rows[0]);
-//   } catch (err) {
-//     res.status(500).send(err.message);
-//   }
-// });
-
-// io.on("connection", (socket) => {
-//   socket.on("chat-message", (message) => {
-//     console.log(message);
-//     socket.broadcast.emit("message", message);
-//   });
-// });
-
 io.on("disconnect", () => {
   console.log("Client disconnected");
 });

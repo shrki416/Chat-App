@@ -9,8 +9,6 @@ function ChatMessages({ messageList, user }) {
     <ChatMessage key={message.id} message={message} user={user} />
   ));
 
-  // <div id="chat-message-list">{messages}</div>;
-
   return (
     <div id="chat-message-list">
       <ScrollableFeed>{messages}</ScrollableFeed>
