@@ -52,6 +52,20 @@ app.post("/api/message", async (req, res) => {
   }
 });
 
+app.get("/api/userMessages", async (req, res) => {
+  try {
+    const userMessages = await pool.query(
+      `SELECT users.id::text, firstname, lastname, message, created_at 
+      FROM users 
+      INNER JOIN messages 
+      ON users.id::text = messages.user_id::text;`
+    );
+    res.send(userMessages.rows);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
