@@ -23,13 +23,3 @@ CREATE TABLE messages (
 );
 
 INSERT INTO messages (user_id, message) VALUES ('1', 'Hello, world!');
-
--- Language: sql
--- Get all messages of a specific user
-
--- SELECT 
---     users.id,
---     users.firstName,
---     users.lastName,
---     (SELECT array_to_json(array_agg(messages.message)) FROM messages WHERE messages.user_id::text = users.id::text) AS messages
--- FROM users;
