@@ -54,11 +54,30 @@ app.post("/api/message", async (req, res) => {
 
 app.get("/api/userMessages", async (req, res) => {
   try {
+    // const userMessages = await pool.query(
+    //   `SELECT users.id::text, firstname, lastname, message, created_at
+    //   FROM users
+    //   INNER JOIN messages
+    //   ON users.id::text = messages.user_id::text;`
+    // );
+    // const userMessages = await pool.query(
+    //   `SELECT
+    //     users.id,
+    //     users.firstName,
+    //     users.lastName,
+    //     (SELECT array_to_json(array_agg(messages.message)) FROM messages WHERE messages.user_id::text = users.id::text) AS messages
+    //   FROM users;`
+    // );
     const userMessages = await pool.query(
-      `SELECT users.id::text, firstname, lastname, message, created_at 
-      FROM users 
-      INNER JOIN messages 
-      ON users.id::text = messages.user_id::text;`
+      `SELECT 
+        users.id,
+        users.firstName,
+        users.lastName,
+        (SELECT json_build_array(array_agg(json_build_object(
+          'message', messages.message,
+          'created_at', messages.created_at
+        ))) FROM messages WHERE messages.user_id::text = users.id::text) AS messages
+      FROM users;`
     );
     res.send(userMessages.rows);
   } catch (error) {
