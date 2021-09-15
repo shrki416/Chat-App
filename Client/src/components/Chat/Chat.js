@@ -16,6 +16,7 @@ const Chat = ({ auth }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [user, setUser] = useState("");
+  const [conversations, setConversations] = useState("");
 
   const socket = io();
 
@@ -31,6 +32,10 @@ const Chat = ({ auth }) => {
     getUserProfile();
     getMessages();
   }, []);
+
+  function handleClick(e) {
+    setConversations(e.target.textContent);
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -67,25 +72,21 @@ const Chat = ({ auth }) => {
     }
   }
 
-  const { firstname, lastname, id } = user;
-
   return (
     <>
-      <Navbar auth={auth} />
+      <Navbar auth={auth} user={user} />
 
       <div className="chat">
         <div id="chat-container">
           <div id="search-container">
             <input type="text" name="search-message-box" placeholder="Search" />
           </div>
-          <ConversationList />
+          <ConversationList handleClick={handleClick} />
           <div id="new-message-container">
             <AddCircleIcon fontSize="large" id="add-icon" />
           </div>
           <div id="chat-title">
-            <span>
-              {firstname} {lastname}
-            </span>
+            <span>To: {conversations}</span>
             <DeleteIcon fontSize="large" id="delete-icon" />
           </div>
           <ChatMessages messageList={messages} user={user} />
