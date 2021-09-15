@@ -53,7 +53,7 @@ import * as timeago from "timeago.js";
 //   },
 // ];
 
-function ConversationList() {
+function ConversationList({ handleClick }) {
   const [allUserMessages, setAllUserMessages] = useState([]);
 
   useEffect(() => {
@@ -76,7 +76,9 @@ function ConversationList() {
       return (
         <div className="conversation" key={userMessage.id}>
           <AccountCircleIcon fontSize="large" />
-          <div className="title-text">{fullName}</div>
+          <div className="title-text" onClick={(e) => handleClick(e)}>
+            {fullName}
+          </div>
           <div className="created-date">{created}</div>
           <div className="conversation-message">{lastMessageText}</div>
         </div>
