@@ -40,10 +40,16 @@ const Chat = ({ auth }) => {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    const { id } = user;
+
     const data = {
       userId: id,
       message: input,
+      room: socket.id,
     };
+
+    const privateMessage = socket.id;
+    console.log(privateMessage);
 
     axios.post("/api/message", data);
     socket.emit("message", data);

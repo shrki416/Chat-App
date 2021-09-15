@@ -39,7 +39,7 @@ app.get("/api/message", async (req, res) => {
 
 app.post("/api/message", async (req, res) => {
   try {
-    const { userId, message } = req.body;
+    const { userId, message, room } = req.body;
 
     const createMessage = await pool.query(
       `INSERT INTO messages(user_id, message) VALUES($1, $2) RETURNING *`,
