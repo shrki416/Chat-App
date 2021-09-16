@@ -7,6 +7,7 @@ const user = require("./router/user");
 const socket = require("socket.io");
 const http = require("http");
 const pool = require("./database/db");
+// const auth = require("./middleware/auth");
 
 const PORT = process.env.PORT || 3000;
 
