@@ -58,10 +58,13 @@ function ConversationList({ handleClick }) {
 
   useEffect(() => {
     getAllUsersMessages();
-  }, [allUserMessages]);
+  }, []);
 
   function getAllUsersMessages() {
-    axios.get("/api/userMessages").then((res) => setAllUserMessages(res.data));
+    axios
+      .get("/api/userMessages")
+      .then((res) => setAllUserMessages(res.data))
+      .catch((err) => console.log(err));
   }
 
   const conversations = allUserMessages.map((userMessage) => {
