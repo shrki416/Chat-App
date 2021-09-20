@@ -1,6 +1,6 @@
 # Chat App
 
-WIP: Coming Soon
+WIP: Coming Soon!
 
 ### Author
 
