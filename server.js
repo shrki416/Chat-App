@@ -80,6 +80,7 @@ app.get("/api/userMessages", async (req, res) => {
         ))) FROM messages WHERE messages.user_id::text = users.id::text) AS messages
       FROM users;`
     );
+
     res.send(userMessages.rows);
   } catch (error) {
     res.status(500).send(error.message);
