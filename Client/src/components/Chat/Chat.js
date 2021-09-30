@@ -45,7 +45,6 @@ const Chat = ({ auth }) => {
     const data = {
       userId: id,
       message: input,
-      room: socket.id,
     };
 
     const privateMessage = socket.id;
