@@ -4,8 +4,8 @@ WIP: Coming Soon!
 
 ## Setup
 
-[x]: Rename `sample.env` to `.env`
-[x]: Replace env variables with your own
+- [ ]: Rename `sample.env` to `.env`
+- [ ]: Replace env variables with your own
 
 ## Installation:
 
