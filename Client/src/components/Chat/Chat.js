@@ -16,43 +16,58 @@ const Chat = ({ auth }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [user, setUser] = useState("");
-  const [conversations, setConversations] = useState("");
+  const [receiverId, setReceiverId] = useState("");
+  const [receiverName, setReceiverName] = useState("");
 
   const socket = io();
+
+  socket.on("message", function (message) {
+    if (
+      (message.receiver_id === localStorage.getItem("mate") &&
+        message.user_id === localStorage.getItem("me")) ||
+      (message.receiver_id === localStorage.getItem("me") &&
+        message.user_id === localStorage.getItem("mate"))
+    ) {
+      setMessages((messages) => [...messages, message]);
+    }
+  });
 
   useEffect(() => {
     socket.on("connect", () => {
       console.log("connected to server", socket.id);
+      getUserProfile();
     });
-
-    socket.on("message", (message) => {
-      setMessages((messages) => [...messages, message]);
-    });
-
-    getUserProfile();
-    getMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleClick(e) {
-    setConversations(e.target.textContent);
+  function handleClick(e, id, msgs) {
+    setReceiverId(id);
+    localStorage.setItem("mate", id);
+    setReceiverName("");
+    setReceiverName(e.target.textContent);
+    getMessages(user.id, id, e.target.textContent);
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const { id } = user;
+    const { id, email } = user;
 
     const data = {
       userId: id,
+      userEmail: email,
       message: input,
+      from: `${user.firstname} ${user.lastname}`,
+      receiverId: receiverId,
     };
 
-    const privateMessage = socket.id;
-    console.log(privateMessage);
-
-    axios.post("/api/message", data);
-    socket.emit("message", data);
-    setInput("");
+    if (receiverId !== null && receiverId !== "") {
+      axios.post("/api/message", data);
+      // socket.emit("message", data);
+      setInput("");
+    } else {
+      alert("Select a User to chat with");
+    }
   }
 
   async function getUserProfile() {
@@ -63,15 +78,27 @@ const Chat = ({ auth }) => {
         },
       };
 
-      await axios.get("/api/user", config).then((res) => setUser(res.data));
+      await axios.get("/api/user", config).then((res) => {
+        socket.emit("join", { userId: res.data.id });
+        localStorage.setItem("me", res.data.id);
+        return setUser(res.data);
+      });
     } catch (error) {
       console.error(error.message);
     }
   }
 
-  async function getMessages() {
+  async function getMessages(userId, chatMateId, recverName) {
     try {
-      await axios.get("/api/message").then((res) => setMessages(res.data));
+      await axios.get(`/api/message/${userId}/${chatMateId}`).then((res) => {
+        let msg = res.data;
+        msg.forEach((m) => {
+          if (m.user_id !== userId) {
+            m["from"] = recverName;
+          }
+        });
+        return setMessages(msg);
+      });
     } catch (error) {
       console.error(error.message);
     }
@@ -91,7 +118,7 @@ const Chat = ({ auth }) => {
             <AddCircleIcon fontSize="large" id="add-icon" />
           </div>
           <div id="chat-title">
-            <span>To: {conversations}</span>
+            <span>To: {receiverName}</span>
             <DeleteIcon fontSize="large" id="delete-icon" />
           </div>
           <ChatMessages messageList={messages} user={user} />
