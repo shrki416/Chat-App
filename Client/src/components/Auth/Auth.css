@@ -71,3 +71,20 @@
   font-weight: 600;
   /* margin-bottom: 20px; */
 }
+
+fieldset {
+  border: 0;
+  padding: 0;
+}
+
+label span {
+  color: var(--bg-main);
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+input {
+  border: 1px solid var(--bg-gray);
+  border-radius: 3px;
+  padding: 5px;
+}
