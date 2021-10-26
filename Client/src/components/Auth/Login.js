@@ -1,16 +1,20 @@
+import React from "react";
 import axios from "axios";
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import loginImage from "../../assets/login.svg";
+import useForm from "../../lib/useForm";
 
 function Login({ auth }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { inputs, handleInputChange } = useForm({
+    email: "",
+    password: "",
+  });
 
   const submit = async (e) => {
     e.preventDefault();
 
     try {
+      const { email, password } = inputs;
       const body = { email, password };
       const response = await axios.post("/api/login", body);
       localStorage.setItem("token", response.data.token);
@@ -32,30 +36,40 @@ function Login({ auth }) {
             <h2>Welcome back</h2>
 
             <form onSubmit={submit}>
-              <div className="input-field mb-1">
-                <input
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
-                  required="required"
-                  type="email"
-                  placeholder="Email"
-                />
-              </div>
+              <fieldset>
+                <label htmlFor="email">
+                  <span>Email</span>
+                  <div className="input-field mb-1">
+                    <input
+                      onChange={handleInputChange}
+                      value={email}
+                      name="email"
+                      required="required"
+                      type="email"
+                      placeholder="Your Email"
+                    />
+                  </div>
+                </label>
 
-              <div className="input-field mb-2">
-                <input
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
-                  required="required"
-                  type="password"
-                  placeholder="Password"
-                />
-              </div>
+                <div className="input-field mb-2">
+                  <label htmlFor="password">
+                    <span>Password</span>
+                    <input
+                      onChange={handleInputChange}
+                      value={password}
+                      name="password"
+                      required="required"
+                      type="password"
+                      placeholder="Your Password"
+                    />
+                  </label>
+                </div>
 
-              <button>LOGIN</button>
-              <h3>
-                Don't have an account? <Link to="/register">REGISTER</Link>
-              </h3>
+                <button>LOGIN</button>
+                <h3>
+                  Don't have an account? <Link to="/register">REGISTER</Link>
+                </h3>
+              </fieldset>
             </form>
           </div>
         </div>
