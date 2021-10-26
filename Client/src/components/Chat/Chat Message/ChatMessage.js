@@ -7,7 +7,7 @@ function ChatMessage({ message, user }) {
   const chatBubbles = user.id === id ? "you-message" : "other-message";
 
   const { firstname, lastname } = user;
-  const userBubble = user.id === id && `${firstname} ${lastname}`;
+  const userBubble = user.id === id ? `${firstname} ${lastname}` : message.from;
 
   const formatDate = (date) => {
     const messageDate = new Date(date);
