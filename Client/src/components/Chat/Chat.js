@@ -37,6 +37,15 @@ const Chat = ({ auth }) => {
       console.log("connected to server", socket.id);
       getUserProfile();
     });
+
+    socket.on("login", ({ activeUsers }) => {
+      console.log("active users", activeUsers);
+    });
+
+    return () => {
+      socket.emit("disconnect");
+      socket.off();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -78,11 +87,10 @@ const Chat = ({ auth }) => {
         },
       };
 
-      await axios.get("/api/user", config).then((res) => {
-        socket.emit("join", { userId: res.data.id });
-        localStorage.setItem("me", res.data.id);
-        return setUser(res.data);
-      });
+      const res = await axios.get("/api/user", config);
+      socket.emit("join", { userId: res.data.id });
+      localStorage.setItem("me", res.data.id);
+      setUser(res.data);
     } catch (error) {
       console.error(error.message);
     }
