@@ -42,7 +42,7 @@ function Login({ auth }) {
                   <div className="input-field mb-1">
                     <input
                       onChange={handleInputChange}
-                      value={email}
+                      value={inputs.email}
                       name="email"
                       required="required"
                       type="email"
@@ -56,7 +56,7 @@ function Login({ auth }) {
                     <span>Password</span>
                     <input
                       onChange={handleInputChange}
-                      value={password}
+                      value={inputs.password}
                       name="password"
                       required="required"
                       type="password"
