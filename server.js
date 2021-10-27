@@ -4,16 +4,16 @@ const register = require("./router/register");
 const login = require("./router/login");
 const verify = require("./router/verify");
 const user = require("./router/user");
-const socket = require("socket.io");
+// const socket = require("socket.io");
 const http = require("http");
 const pool = require("./database/db");
-// const auth = require("./middleware/auth");
+const { getSocket } = require("./socket");
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 const server = http.createServer(app);
-const io = socket(server);
+const io = getSocket(server);
 
 app.use(express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
