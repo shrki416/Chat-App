@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const register = require("./router/register");
 const login = require("./router/login");
+const logout = require("./router/logout");
 const verify = require("./router/verify");
 const user = require("./router/user");
 const socket = require("socket.io");
@@ -17,10 +18,11 @@ const io = socket(server);
 app.use(express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.set("io", io);
+app.set("socketio", io);
 
 // Authentication Routes
 app.use("/api", login);
+app.use("/api", logout);
 app.use("/api", register);
 app.use("/api", verify);
 app.use("/api", user);
@@ -29,10 +31,6 @@ io.sockets.on("connection", function (socket) {
   socket.on("join", function (data) {
     socket.join(data.userId); // We are using room of socket io
   });
-});
-
-io.on("disconnect", () => {
-  console.log("Client disconnected");
 });
 
 app.get("/api/message/:userId/:chatMateId", async (req, res) => {
