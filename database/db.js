@@ -14,12 +14,4 @@ pool
   .then(() => console.log("👌 connected to database 👌"))
   .catch((err) => console.log(err));
 
-// const query = `SELECT * FROM users`;
-
-// pool.query(query, (err, res) => {
-//   if (err) console.log(err);
-//   console.log(res.rows);
-//   pool.end();
-// });
-
 module.exports = pool;
