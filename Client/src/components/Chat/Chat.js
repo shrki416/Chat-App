@@ -39,7 +39,11 @@ const Chat = ({ auth }) => {
     });
 
     socket.on("login", ({ activeUsers }) => {
-      console.log("active users", activeUsers);
+      console.log("🍏", activeUsers);
+    });
+
+    socket.on("activeUsers", ({ activeUsers }) => {
+      console.log(`🍌`, activeUsers);
     });
 
     return () => {
