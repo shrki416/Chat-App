@@ -1,11 +1,22 @@
 import React from "react";
 import "./Navbar.css";
+import axios from "axios";
 
 function Navbar({ auth, user }) {
-  const logout = (e) => {
+  const logout = async (e) => {
     e.preventDefault();
-    localStorage.removeItem("token");
-    auth(false);
+    try {
+      const email = localStorage.getItem("email");
+      const response = await axios.post("/api/logout", { email });
+
+      if (response.status === 200) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("email");
+        auth(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const { firstname, lastname } = user;
