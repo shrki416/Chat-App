@@ -43,7 +43,6 @@ const Chat = ({ auth }) => {
     });
 
     return () => {
-      socket.emit("disconnect");
       socket.off();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

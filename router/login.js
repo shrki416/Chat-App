@@ -3,8 +3,6 @@ const pool = require("../database/db");
 const validate = require("../middleware/validate");
 const jwtGenerator = require("../utils/jwtGenerator");
 const bcrypt = require("bcrypt");
-const { getSocket } = require("../socket");
-const io = getSocket();
 
 router.post("/login", validate, async (req, res) => {
   try {
@@ -27,17 +25,17 @@ router.post("/login", validate, async (req, res) => {
         .status(401)
         .send({ message: "Email or Password is inncorrect" });
 
-    await pool.query(
-      "UPDATE users SET last_active_at = NOW() WHERE email = $1",
-      [email]
-    );
+    await pool.query("UPDATE users SET last_active_at = $1 WHERE email = $2", [
+      new Date(),
+      email,
+    ]);
 
     const activeUsers = await pool.query(
       `SELECT id, firstname, lastname FROM users WHERE last_active_at >= NOW() - interval '1 hr'`
     );
 
-    console.log(`🍌`, activeUsers.rows);
-
+    const io = req.app.get("io");
+    console.log(activeUsers.rows);
     io.emit("login", { activeUsers: activeUsers.rows });
 
     const token = jwtGenerator(user.rows[0].id);
