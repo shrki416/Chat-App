@@ -5,12 +5,20 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "dev": "concurrently \"npm run start\" \"npm run watch --prefix client\""
+    "dev": "concurrently \"npm run start\" \"npm run watch --prefix client\"",
+    "init": "npm i && npm i --prefix client && psql -f create-db.sql && psql -d chat-app -f db.sql"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shrki416/Chat-App.git"
   },
+  "keywords": [
+    "chat",
+    "app",
+    "node",
+    "express",
+    "postgreSQL"
+  ],
   "author": "AA",
   "license": "ISC",
   "bugs": {
