@@ -34,13 +34,39 @@ router.post("/login", validate, async (req, res) => {
       `SELECT id, firstname, lastname FROM users WHERE last_active_at >= NOW() - interval '1 hr'`
     );
 
-    const io = req.app.get("io");
-    console.log(activeUsers.rows);
-    io.emit("login", { activeUsers: activeUsers.rows });
+    const io = req.app.get("socketio");
+    io.on("connect", (socket) => {
+      socket.emit("login", { activeUsers: activeUsers.rows });
+    });
 
     const token = jwtGenerator(user.rows[0].id);
 
     res.json({ token, email });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.post("/logout", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    await pool.query("UPDATE users SET last_active_at = $1 WHERE email = $2", [
+      null,
+      email,
+    ]);
+
+    const activeUsers = await pool.query(
+      `SELECT id, firstname, lastname FROM users WHERE last_active_at >= NOW() - interval '1 hr'`
+    );
+
+    const io = req.app.get("socketio");
+    io.on("connect", (socket) => {
+      socket.emit("logout", { activeUsers: activeUsers.rows });
+    });
+
+    res.json({ message: "Logged out" });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");
