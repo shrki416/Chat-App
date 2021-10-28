@@ -6,19 +6,17 @@ router.post("/logout", async (req, res) => {
   const io = req.app.get("socketio");
 
   try {
+    console.log("ran!");
     await pool.query("UPDATE users SET last_active_at = $1 WHERE email = $2", [
       null,
       email,
     ]);
 
-    const activeUsers = await pool.query(
+    const active = await pool.query(
       `SELECT id, firstname, lastname FROM users WHERE last_active_at > NOW() - interval '1 hr'`
     );
 
-    console.log(activeUsers.rows);
-
-    io.emit("activeUsers", activeUsers.rows);
-    io.emit("logout", { activeUsers: activeUsers.rows });
+    io.emit("logout", { activeUsers: active.rows });
 
     res.json({ message: "Logged Out!" });
   } catch (error) {
