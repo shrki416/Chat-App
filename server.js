@@ -22,10 +22,10 @@ app.set("socketio", io);
 
 // Authentication Routes
 app.use("/api", login);
-app.use("/api", logout);
 app.use("/api", register);
 app.use("/api", verify);
 app.use("/api", user);
+app.use("/api", logout);
 
 io.sockets.on("connection", function (socket) {
   socket.on("join", function (data) {
