@@ -1,12 +1,8 @@
 const express = require("express");
 const path = require("path");
-const register = require("./router/register");
-const login = require("./router/login");
-const logout = require("./router/logout");
-const verify = require("./router/verify");
-const user = require("./router/user");
 const socket = require("socket.io");
 const http = require("http");
+const https = require("https");
 const pool = require("./database/db");
 
 const PORT = process.env.PORT || 3000;
@@ -14,18 +10,17 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 const server = http.createServer(app);
 const io = socket(server);
+app.set("socketio", io);
 
 app.use(express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.set("socketio", io);
 
-// Authentication Routes
-app.use("/api", login);
-app.use("/api", register);
-app.use("/api", verify);
-app.use("/api", user);
-app.use("/api", logout);
+app.use("/api", require("./router/login"));
+app.use("/api", require("./router/register"));
+app.use("/api", require("./router/verify"));
+app.use("/api", require("./router/user"));
+app.use("/api", require("./router/logout"));
 
 io.sockets.on("connection", function (socket) {
   socket.on("join", function (data) {
@@ -73,20 +68,6 @@ app.post("/api/message", async (req, res) => {
 
 app.get("/api/userMessages", async (req, res) => {
   try {
-    // const userMessages = await pool.query(
-    //   `SELECT users.id::text, firstname, lastname, message, created_at
-    //   FROM users
-    //   INNER JOIN messages
-    //   ON users.id::text = messages.user_id::text;`
-    // );
-    // const userMessages = await pool.query(
-    //   `SELECT
-    //     users.id,
-    //     users.firstName,
-    //     users.lastName,
-    //     (SELECT array_to_json(array_agg(messages.message)) FROM messages WHERE messages.user_id::text = users.id::text) AS messages
-    //   FROM users;`
-    // );
     const userMessages = await pool.query(
       `SELECT 
         users.id,
