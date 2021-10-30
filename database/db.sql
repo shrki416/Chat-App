@@ -20,6 +20,5 @@ BEGIN
         receiver_id text NOT NULL
     );
     RAISE NOTICE `messages table created 🎉`;
-
 END
 $do$;
