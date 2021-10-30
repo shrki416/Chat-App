@@ -4,7 +4,7 @@ const socket = require("socket.io");
 const http = require("http");
 const https = require("https");
 const pool = require("./database/db");
-const { developmentErrors } = require("./handlers/errorHandlers");
+const { devErrors } = require("./handlers/errorHandlers");
 
 const PORT = process.env.PORT || 3000;
 
@@ -13,21 +13,20 @@ const server = http.createServer(app);
 const io = socket(server);
 app.set("socketio", io);
 
+app.use(devErrors);
+
 app.use(express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api", require("./router/login"));
-app.use("/api", require("./router/register"));
+app.use("/api", require("./router/auth"));
 app.use("/api", require("./router/verify"));
 app.use("/api", require("./router/user"));
-app.use("/api", require("./router/logout"));
 
-app.use(developmentErrors);
-
-io.sockets.on("connection", function (socket) {
-  socket.on("join", function (data) {
-    socket.join(data.userId); // We are using room of socket io
+io.sockets.on("connection", (socket) => {
+  socket.on("join", ({ userId }) => {
+    // we are using room of socket io
+    socket.join(userId);
   });
 });
 
@@ -61,9 +60,8 @@ app.post("/api/message", async (req, res) => {
     let result = createMessage.rows[0];
     result.from = from;
 
-    // io.emit("message", createMessage.rows[0]);
-    io.sockets.in(userId).emit("message", result);
-    io.sockets.in(receiverId).emit("message", result);
+    io.in(userId).emit("message", result);
+    io.in(receiverId).emit("message", result);
   } catch (error) {
     res.status(500).send(error.message);
   }
