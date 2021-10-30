@@ -4,6 +4,7 @@ const socket = require("socket.io");
 const http = require("http");
 const https = require("https");
 const pool = require("./database/db");
+const { developmentErrors } = require("./handlers/errorHandlers");
 
 const PORT = process.env.PORT || 3000;
 
@@ -21,6 +22,8 @@ app.use("/api", require("./router/register"));
 app.use("/api", require("./router/verify"));
 app.use("/api", require("./router/user"));
 app.use("/api", require("./router/logout"));
+
+app.use(developmentErrors);
 
 io.sockets.on("connection", function (socket) {
   socket.on("join", function (data) {
