@@ -12,7 +12,7 @@ const catchErrors = (fn) => {
   };
 };
 
-const developmentErrors = (error, req, res, next) => {
+const devErrors = (error, req, res, next) => {
   error.stack = error.stack || "";
   const errorDetails = {
     message: error.message,
@@ -25,5 +25,5 @@ const developmentErrors = (error, req, res, next) => {
 
 module.exports = {
   catchErrors,
-  developmentErrors,
+  devErrors,
 };
