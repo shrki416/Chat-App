@@ -2,9 +2,8 @@ const express = require("express");
 const path = require("path");
 const socket = require("socket.io");
 const http = require("http");
-const https = require("https");
 const pool = require("./database/db");
-const { devErrors } = require("./handlers/errorHandlers");
+const { devErrors, notFound, prodErrors } = require("./handlers/errorHandlers");
 
 const PORT = process.env.PORT || 3000;
 
@@ -12,8 +11,6 @@ const app = express();
 const server = http.createServer(app);
 const io = socket(server);
 app.set("socketio", io);
-
-app.use(devErrors);
 
 app.use(express.static(path.join(__dirname, "client/build")));
 app.use(express.json());
@@ -88,6 +85,9 @@ app.get("/api/userMessages", async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+app.use(notFound);
+process.env.ENV === "DEVELOPMENT" ? app.use(devErrors) : app.use(prodErrors);
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
