@@ -9,9 +9,19 @@ WIP: Coming Soon!
 
 ## Installation:
 
+###### To setup the db, run the following command:
+
+```shell
+npm run init-db-setup
+```
+
+###### Then run the following command to install dependencies:
+
 ```shell
 $ npm install && npm install --prefix client
 ```
+
+###### To run the server:
 
 ```shell
 $ npm run dev
