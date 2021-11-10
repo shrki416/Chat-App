@@ -12,12 +12,6 @@ const catchErrors = (fn) => {
   };
 };
 
-const notFound = (req, res, next) => {
-  res.status(404).json({
-    message: "Not Found",
-  });
-};
-
 const devErrors = (error, req, res, next) => {
   error.stack = error.stack || "";
 
