@@ -3,7 +3,7 @@ const path = require("path");
 const socket = require("socket.io");
 const http = require("http");
 const pool = require("./database/db");
-const { devErrors, notFound, prodErrors } = require("./handlers/errorHandlers");
+const { devErrors, prodErrors } = require("./handlers/errorHandlers");
 
 const PORT = process.env.PORT || 3000;
 
@@ -86,7 +86,6 @@ app.get("/api/userMessages", async (req, res) => {
   }
 });
 
-app.use(notFound);
 process.env.ENV === "DEVELOPMENT" ? app.use(devErrors) : app.use(prodErrors);
 
 app.get("/*", (req, res) => {
