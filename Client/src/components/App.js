@@ -5,7 +5,7 @@ import Chat from "./Chat/Chat";
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
+  Routes,
   Redirect,
 } from "react-router-dom";
 import "../App.css";
@@ -33,42 +33,47 @@ const App = () => {
   return (
     <Router>
       <div className="App">
-        <Switch>
+        <Routes>
           <Route
-            exact
             path="/"
-            render={(props) =>
+            element={
               isUserAuthenticated ? (
-                <Chat {...props} auth={authenticateUser} />
+                <Chat auth={authenticateUser} />
               ) : (
-                <Redirect to="/login" />
+                <Login auth={authenticateUser} />
               )
             }
           />
           <Route
-            exact
             path="/login"
-            render={(props) =>
-              !isUserAuthenticated ? (
-                <Login {...props} auth={authenticateUser} />
+            element={
+              isUserAuthenticated ? (
+                <Chat auth={authenticateUser} />
               ) : (
-                <Redirect to="/" />
+                <Login auth={authenticateUser} />
               )
             }
           />
           <Route
-            exact
             path="/register"
-            render={(props) =>
+            element={
               !isUserAuthenticated ? (
-                <Register {...props} />
+                <Register />
               ) : (
-                <Redirect to="/login" />
+                <Login auth={authenticateUser} />
               )
             }
           />
-          <Route render={() => <h1>404 page not found</h1>} />
-        </Switch>
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: "1rem" }}>
+                <h1>404</h1>
+                <p>There's nothing here!</p>
+              </main>
+            }
+          />
+        </Routes>
       </div>
     </Router>
   );
