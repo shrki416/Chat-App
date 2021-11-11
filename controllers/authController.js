@@ -1,5 +1,5 @@
 const pool = require("../database/db");
-// const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const jwtGenerator = require("../utils/jwtGenerator");
 
 const register = async (req, res) => {
