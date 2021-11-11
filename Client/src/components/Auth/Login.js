@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import loginImage from "../../assets/login.svg";
 import useForm from "../../lib/useForm";
+import { toast } from "react-toastify";
 
 function Login({ auth }) {
   const { inputs, handleInputChange } = useForm({
@@ -20,8 +21,11 @@ function Login({ auth }) {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("email", response.data.email);
       auth(true);
+      toast.success(`👋 ${firstName}`);
     } catch (error) {
-      console.error(error.message);
+      if (error && error.response && error.response.data) {
+        toast.error(`😢 ${error.response.data.message}`);
+      }
     }
   };
 
