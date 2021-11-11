@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import registerImage from "../../assets/register.svg";
 import "./Auth.css";
@@ -14,7 +14,7 @@ function Register() {
     password: "",
   });
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const submit = async (e) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ function Register() {
     } catch (error) {
       console.error(error.message);
     }
-    history.push("/login");
+    navigate("/login", { replace: true });
   };
 
   return (
