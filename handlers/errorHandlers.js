@@ -37,5 +37,4 @@ module.exports = {
   catchErrors,
   devErrors,
   prodErrors,
-  notFound,
 };
