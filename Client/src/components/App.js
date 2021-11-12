@@ -6,7 +6,6 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Redirect,
 } from "react-router-dom";
 import "../App.css";
 import axios from "axios";

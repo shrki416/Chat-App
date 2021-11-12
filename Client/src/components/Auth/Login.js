@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import loginImage from "../../assets/login.svg";
@@ -21,7 +21,7 @@ function Login({ auth }) {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("email", response.data.email);
       auth(true);
-      toast.success(`👋 ${firstName}`);
+
     } catch (error) {
       if (error && error.response && error.response.data) {
         toast.error(`😢 ${error.response.data.message}`);
