@@ -34,7 +34,6 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  // try {
   const { email, password } = req.body;
 
   const user = await pool.query("SELECT * FROM users WHERE email = $1", [
@@ -65,20 +64,15 @@ const login = async (req, res) => {
   });
 
   const token = jwtGenerator(user.rows[0].id);
+  const firstName = user.rows[0].firstname;
 
-  res.json({ token, email });
-  // } catch (error) {
-  // console.error(error.message);
-  // res.status(500).send("Server Error");
-  // }
+  res.json({ token, email, firstName });
 };
 
 const logout = async (req, res) => {
   const { email } = req.body;
   const io = req.app.get("socketio");
 
-  // try {
-  // console.log("ran!");
   await pool.query("UPDATE users SET last_active_at = $1 WHERE email = $2", [
     null,
     email,
@@ -90,11 +84,14 @@ const logout = async (req, res) => {
 
   io.emit("logout", { activeUsers: active.rows });
 
-  res.json({ message: "Logged Out!" });
-  // } catch (error) {
-  // console.error(error.message);
-  // res.status(500).send("Server Error");
-  // }
+  const user_fn = await pool.query(
+    `SELECT firstName FROM users WHERE email = $1`,
+    [email]
+  );
+
+  const name = user_fn.rows[0].firstname;
+
+  res.json({ message: `${name} is logged out!` });
 };
 
 module.exports = {
