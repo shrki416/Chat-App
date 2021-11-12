@@ -5,6 +5,7 @@ import registerImage from "../../assets/register.svg";
 import "./Auth.css";
 
 import useFrom from "../../lib/useForm";
+import { toast } from "react-toastify";
 
 function Register() {
   const { inputs, handleInputChange } = useFrom({
@@ -22,12 +23,12 @@ function Register() {
     try {
       const { firstName, lastName, email, password } = inputs;
       const body = { firstName, lastName, email, password };
-      const response = await axios.post("/api/register", body);
-      localStorage.setItem("token", response.data.token);
+      await axios.post("/api/register", body);
     } catch (error) {
       console.error(error.message);
     }
     navigate("/login", { replace: true });
+    toast.success(<h3>🚀 You registered with: {inputs.email}</h3>);
   };
 
   return (
