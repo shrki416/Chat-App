@@ -21,10 +21,10 @@ function Login({ auth }) {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("email", response.data.email);
       auth(true);
-
+      toast.success(<h3>🙂 Welcome, {response.data.firstName}!</h3>);
     } catch (error) {
       if (error && error.response && error.response.data) {
-        toast.error(`😢 ${error.response.data.message}`);
+        toast.error(<h3>😢 {error.response.data.message}</h3>);
       }
     }
   };
