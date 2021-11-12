@@ -6,11 +6,12 @@ import { toast } from "react-toastify";
 function Navbar({ auth, user }) {
   const logout = async (e) => {
     e.preventDefault();
+
     try {
       const email = localStorage.getItem("email");
       const response = await axios.post("/api/logout", { email });
 
-      toast.success(`👋 ${user.firstName}`);
+      toast.success(<h3>👋 {response.data.message}</h3>);
 
       if (response.status === 200) {
         localStorage.removeItem("token");
