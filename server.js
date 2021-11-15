@@ -30,7 +30,7 @@ io.sockets.on("connection", (socket) => {
 app.get("/api/message/:userId/:chatMateId", async (req, res) => {
   const { userId, chatMateId } = req.params;
   try {
-    let sql = `SELECT * FROM messages WHERE 
+    let sql = `SELECT * FROM messages WHERE
     (user_id = $1 AND receiver_id = $2)
     OR (user_id = $2 AND receiver_id = $1)`;
     const query = {
@@ -67,7 +67,7 @@ app.post("/api/message", async (req, res) => {
 app.get("/api/userMessages", async (req, res) => {
   try {
     const userMessages = await pool.query(
-      `SELECT 
+      `SELECT
         users.id,
         users.firstName,
         users.lastName,

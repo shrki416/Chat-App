@@ -23,12 +23,10 @@ function Navbar({ auth, user }) {
     }
   };
 
-  const { firstname, lastname } = user;
-
   return (
     <div id="navbar" className="card-shadow">
       <h2>Chat-App</h2>
-      <p>{user && `Welcome, ${firstname} ${lastname}!`}</p>
+      <p>{user && `Welcome, ${user.firstname} ${user.lastname}!`}</p>
       <button onClick={(e) => logout(e)}>LOGOUT</button>
     </div>
   );
