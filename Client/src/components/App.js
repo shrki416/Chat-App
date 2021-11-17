@@ -1,13 +1,11 @@
+import "../styles/App.css";
+
 import React, { useEffect, useState } from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+
+import Chat from "./Chat/Chat";
 import Login from "../components/Auth/Login";
 import Register from "../components/Auth/Register";
-import Chat from "./Chat/Chat";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from "react-router-dom";
-import "../App.css";
 import axios from "axios";
 
 const App = () => {
