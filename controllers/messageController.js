@@ -1,9 +1,9 @@
-const pool = require("../database/db");
+const pool = require('../database/db');
 
 const privateMessage = async (req, res) => {
   const { userId, chatMateId } = req.params;
   try {
-    let sql = `SELECT * FROM messages WHERE
+    const sql = `SELECT * FROM messages WHERE
     (user_id = $1 AND receiver_id = $2)
     OR (user_id = $2 AND receiver_id = $1)`;
     const query = {
@@ -11,28 +11,28 @@ const privateMessage = async (req, res) => {
       values: [userId, chatMateId],
     };
 
-    const messages = await pool.query(query);
-    res.send(messages.rows);
+    const privateMessages = await pool.query(query);
+    res.send(privateMessages.rows);
   } catch (error) {
     res.status(500).send(error.message);
   }
 };
 
-const message = async (req, res) => {
-  const io = req.app.get("socketio");
+const messages = async (req, res) => {
+  const io = req.app.get('socketio');
   try {
-    const { userId, message, from, receiverId, room } = req.body;
+    const { userId, message, from, receiverId } = req.body;
 
     const createMessage = await pool.query(
       `INSERT INTO messages(user_id, message, receiver_id) VALUES($1, $2, $3) RETURNING *`,
       [userId, message, receiverId]
     );
 
-    let result = createMessage.rows[0];
+    const result = createMessage.rows[0];
     result.from = from;
 
-    io.in(userId).emit("message", result);
-    io.in(receiverId).emit("message", result);
+    io.in(userId).emit('message', result);
+    io.in(receiverId).emit('message', result);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -40,7 +40,7 @@ const message = async (req, res) => {
 
 const userMessages = async (req, res) => {
   try {
-    const userMessages = await pool.query(
+    const userMessage = await pool.query(
       `SELECT
         users.id,
         users.firstName,
@@ -54,7 +54,7 @@ const userMessages = async (req, res) => {
       FROM users;`
     );
 
-    res.send(userMessages.rows);
+    res.send(userMessage.rows);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -62,6 +62,6 @@ const userMessages = async (req, res) => {
 
 module.exports = {
   privateMessage,
-  message,
+  messages,
   userMessages,
 };

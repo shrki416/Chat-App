@@ -1,11 +1,7 @@
-const catchErrors = (fn) => {
-  return (req, res, next) => {
-    return fn(req, res, next).catch(next);
-  };
-};
+const catchErrors = (fn) => (req, res, next) => fn(req, res, next).catch(next);
 
 const devErrors = (error, req, res, next) => {
-  error.stack = error.stack || "";
+  error.stack = error.stack || '';
 
   const errorDetails = {
     message: error.message,

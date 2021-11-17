@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-
 import "./Chat.css";
-import axios from "axios";
+
 import * as timeago from "timeago.js";
+
+import React, { useEffect, useState } from "react";
+
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import axios from "axios";
 
 // const users = [
 //   {
