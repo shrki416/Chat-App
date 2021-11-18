@@ -86,6 +86,7 @@ const logout = async (req, res) => {
 
   const name = userFirstname.rows[0].firstname;
 
+  io.emit('logout', { name });
   res.json({ message: `${name} is logged out!` });
 };
 

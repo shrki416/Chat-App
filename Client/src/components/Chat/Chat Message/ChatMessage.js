@@ -1,8 +1,10 @@
-import React, { useCallback } from "react";
-
 import "./ChatMesasge.css";
 
-function ChatMessage({ message, user }) {
+import React, { useCallback } from "react";
+
+import { toast } from "react-toastify";
+
+function ChatMessage({ message, user, userLeave }) {
   const id = message.user_id;
   const chatBubbles = user.id === id ? "you-message" : "other-message";
 
@@ -24,6 +26,8 @@ function ChatMessage({ message, user }) {
   }, []);
 
   return (
+      <>
+      {userLeave && toast.success(`${userLeave} has left the chat`)}
     <div className={`message-row ${chatBubbles}`} ref={setRef}>
       <div className="message-content">
         <div className="message-text card-shadow">{message.message}</div>
@@ -32,6 +36,7 @@ function ChatMessage({ message, user }) {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

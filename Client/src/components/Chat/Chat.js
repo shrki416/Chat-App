@@ -19,6 +19,7 @@ const Chat = ({ auth }) => {
   const [user, setUser] = useState("");
   const [receiverId, setReceiverId] = useState("");
   const [receiverName, setReceiverName] = useState("");
+  const [userLeave, setUserLeave] = useState('');
 
   const socket = io();
 
@@ -43,8 +44,9 @@ const Chat = ({ auth }) => {
       console.log("🍏", activeUsers);
     });
 
-    socket.on("logout", ({ activeUsers }) => {
-      console.log(`🍌`, activeUsers);
+    socket.on("logout", ({ name }) => {
+      console.log(`🍌`, name);
+      setUserLeave(name);
     });
 
     return () => {
@@ -135,7 +137,7 @@ const Chat = ({ auth }) => {
             <span>To: {receiverName}</span>
             <DeleteIcon fontSize="large" id="delete-icon" />
           </div>
-          <ChatMessages messageList={messages} user={user} />
+          <ChatMessages messageList={messages} user={user} userLeave={userLeave}/>
           <ChatForm
             handleSubmit={handleSubmit}
             setInput={setInput}
