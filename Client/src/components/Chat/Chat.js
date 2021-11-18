@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react";
-import Navbar from "../Navbar/Navbar";
+import "./Chat.css";
+
+import React, { useEffect, useState } from "react";
 
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import DeleteIcon from "@material-ui/icons/Delete";
-
-import { io } from "socket.io-client";
-import axios from "axios";
-
-import "./Chat.css";
 import ChatForm from "./Chat Form/ChatForm";
 import ChatMessages from "./Chat Messages/ChatMessages";
 import ConversationList from "./ConversationList";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Navbar from "../Navbar/Navbar";
+import axios from "axios";
+import { io } from "socket.io-client";
+
+// import { toast } from "react-toastify";
 
 const Chat = ({ auth }) => {
   const [messages, setMessages] = useState([]);
@@ -49,7 +50,8 @@ const Chat = ({ auth }) => {
     return () => {
       socket.off();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleClick(e, id, msgs) {
@@ -78,6 +80,7 @@ const Chat = ({ auth }) => {
       // socket.emit("message", data);
       setInput("");
     } else {
+        // toast.error("Please select a conversation");
       alert("Select a User to chat with");
     }
   }
