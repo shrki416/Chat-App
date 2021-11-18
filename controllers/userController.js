@@ -1,12 +1,15 @@
 const pool = require('../database/db');
+const { getUser } = require('../database/queries/db-user');
 
 const users = async (req, res) => {
   try {
-    const user = await pool.query(
-      'SELECT id, firstName, lastName, email, id from users WHERE id=$1',
-      [req.user]
-    );
-    res.json(user.rows[0]);
+    const id = req.user;
+    // const user = await pool.query(
+    //   'SELECT id, firstName, lastName, email, id from users WHERE id=$1',
+    //   [id]
+    // );
+    const user = await getUser(id);
+    res.json(user);
   } catch (error) {
     console.error(error.message);
     res.status(500).json('Server Error');
