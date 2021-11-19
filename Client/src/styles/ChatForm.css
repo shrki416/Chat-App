@@ -1,4 +1,4 @@
-@import "../Chat.css";
+@import "./Chat.css";
 
 #chat-form {
   display: grid;

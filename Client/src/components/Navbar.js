@@ -1,5 +1,6 @@
+import "../styles/Navbar.css";
+
 import React from "react";
-import "./Navbar.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 

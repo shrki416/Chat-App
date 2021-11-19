@@ -1,17 +1,15 @@
-import "./Chat.css";
+import "../styles/Chat.css";
 
 import React, { useEffect, useState } from "react";
 
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import ChatForm from "./Chat Form/ChatForm";
-import ChatMessages from "./Chat Messages/ChatMessages";
+import ChatForm from "./ChatForm";
+import ChatMessages from "./ChatMessages";
 import ConversationList from "./ConversationList";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "./Navbar";
 import axios from "axios";
 import { io } from "socket.io-client";
-
-// import { toast } from "react-toastify";
 
 const Chat = ({ auth }) => {
   const [messages, setMessages] = useState([]);
@@ -19,7 +17,6 @@ const Chat = ({ auth }) => {
   const [user, setUser] = useState("");
   const [receiverId, setReceiverId] = useState("");
   const [receiverName, setReceiverName] = useState("");
-  const [userLeave, setUserLeave] = useState('');
 
   const socket = io();
 
@@ -46,14 +43,13 @@ const Chat = ({ auth }) => {
 
     socket.on("logout", ({ name }) => {
       console.log(`🍌`, name);
-      setUserLeave(name);
     });
 
     return () => {
       socket.off();
     };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleClick(e, id, msgs) {
@@ -79,10 +75,8 @@ const Chat = ({ auth }) => {
 
     if (receiverId !== null && receiverId !== "") {
       axios.post("/api/message", data);
-      // socket.emit("message", data);
       setInput("");
     } else {
-        // toast.error("Please select a conversation");
       alert("Select a User to chat with");
     }
   }
@@ -137,7 +131,7 @@ const Chat = ({ auth }) => {
             <span>To: {receiverName}</span>
             <DeleteIcon fontSize="large" id="delete-icon" />
           </div>
-          <ChatMessages messageList={messages} user={user} userLeave={userLeave}/>
+          <ChatMessages messageList={messages} user={user} />
           <ChatForm
             handleSubmit={handleSubmit}
             setInput={setInput}

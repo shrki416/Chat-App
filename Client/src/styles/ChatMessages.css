@@ -1,5 +1,5 @@
-@import "../Chat.css";
-/* 
+@import "./Chat.css";
+/*
 #chat-message-list {
   grid-area: chat-message-list;
   display: flex;

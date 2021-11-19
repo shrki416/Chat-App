@@ -1,9 +1,11 @@
+import "../styles/Auth.css";
+
+import { Link } from "react-router-dom";
 import React from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import loginImage from "../../assets/login.svg";
-import useForm from "../../lib/useForm";
+import loginImage from "../assets/login.svg";
 import { toast } from "react-toastify";
+import useForm from "../lib/useForm";
 
 function Login({ auth }) {
   const { inputs, handleInputChange } = useForm({

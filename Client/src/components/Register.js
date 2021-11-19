@@ -1,11 +1,12 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import registerImage from "../../assets/register.svg";
-import "./Auth.css";
+import "../styles/Auth.css";
 
-import useFrom from "../../lib/useForm";
+import { Link, useNavigate } from "react-router-dom";
+
+import React from "react";
+import axios from "axios";
+import registerImage from "../assets/register.svg";
 import { toast } from "react-toastify";
+import useFrom from "../lib/useForm";
 
 function Register() {
   const { inputs, handleInputChange } = useFrom({
