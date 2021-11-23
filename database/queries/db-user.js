@@ -9,6 +9,15 @@ const getUser = async (id) => {
   return user.rows[0];
 };
 
+const getActiveUsers = async () => {
+  const userQuery = `SELECT id, firstname, lastname FROM users WHERE last_active_at >= now() - interval '1 hr'`;
+
+  const active = await pool.query(userQuery);
+
+  return active.rows;
+};
+
 module.exports = {
   getUser,
+  getActiveUsers,
 };
