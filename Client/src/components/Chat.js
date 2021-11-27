@@ -20,7 +20,7 @@ const Chat = ({ auth }) => {
 
   const socket = io();
 
-  socket.on("message", function (message) {
+  socket.on("message", (message) => {
     if (
       (message.receiver_id === localStorage.getItem("mate") &&
         message.user_id === localStorage.getItem("me")) ||
@@ -77,7 +77,7 @@ const Chat = ({ auth }) => {
       axios.post("/api/message", data);
       setInput("");
     } else {
-      alert("Select a User to chat with");
+      alert("Select a buddy to chat with");
     }
   }
 
@@ -100,15 +100,13 @@ const Chat = ({ auth }) => {
 
   async function getMessages(userId, chatMateId, recverName) {
     try {
-      await axios.get(`/api/message/${userId}/${chatMateId}`).then((res) => {
-        let msg = res.data;
-        msg.forEach((m) => {
-          if (m.user_id !== userId) {
-            m["from"] = recverName;
-          }
-        });
-        return setMessages(msg);
-      });
+    const response = await axios.get(`/api/message/${userId}/${chatMateId}`);
+    response.data.forEach((message) => {
+        if (message.user_id !== userId) {
+            message["from"] = recverName;
+        }
+    });
+    setMessages(response.data);
     } catch (error) {
       console.error(error.message);
     }
@@ -127,7 +125,7 @@ const Chat = ({ auth }) => {
           <div id="new-message-container">
             <AddCircleIcon fontSize="large" id="add-icon" />
           </div>
-          <div id="chat-title">
+          <div id="chat-title" className="card-shadow">
             <span>To: {receiverName}</span>
             <DeleteIcon fontSize="large" id="delete-icon" />
           </div>
