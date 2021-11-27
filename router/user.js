@@ -24,3 +24,5 @@ module.exports = router;
 //   created: "1 week ago",
 //   message: "Yes I love how Python does that",
 // },
+
+// SELECT firstname, lastname FROM users INNER JOIN messages ON users.id = messages.user_id WHERE messages.user_id = $1 ORDER BY messages.created_at DESC LIMIT 1;
