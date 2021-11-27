@@ -5,6 +5,8 @@
   --bg-gray: #c8d6e5;
   --success: #42b983;
   --danger: #b94242;
+  --white: #fff;
+  --black: #000;
 }
 
 .card-shadow {
