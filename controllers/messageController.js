@@ -1,4 +1,5 @@
 const pool = require('../database/db');
+const formatMessage = require('../utils/formatMessage');
 
 const privateMessage = async (req, res) => {
   const { userId, chatMateId } = req.params;
@@ -38,37 +39,25 @@ const messages = async (req, res) => {
   }
 };
 
-// const userMessages = async (req, res) => {
-//   try {
-//     const userMessage = await pool.query(
-//       `SELECT
-//         users.id,
-//         users.firstName,
-//         users.lastName,
-//         users.email,
-//         (SELECT json_build_array(array_agg(json_build_object(
-//           'message', messages.message,
-//           'receiverId', messages.receiver_id,
-//           'created_at', messages.created_at
-//         ))) FROM messages WHERE messages.user_id::text = users.id::text) AS messages
-//       FROM users;`
-//     );
-
-//     res.send(userMessage.rows);
-//   } catch (error) {
-//     res.status(500).send(error.message);
-//   }
-// };
-
 const userMessages = async (req, res) => {
-  console.log(`🍏`, req.params.id);
   try {
     const userMessage = await pool.query(
-      `SELECT users.id::text, firstname, lastname, message, created_at FROM users INNER JOIN messages ON users.id::text = messages.user_id::text WHERE messages.user_id = $1 ORDER BY messages.created_at DESC LIMIT 1`,
-      [req.params.id]
+      `SELECT
+        users.id,
+        users.firstName,
+        users.lastName,
+        users.email,
+        (SELECT json_build_array(array_agg(json_build_object(
+          'message', messages.message,
+          'receiverId', messages.receiver_id,
+          'created_at', messages.created_at
+        ))) FROM messages WHERE messages.user_id::text = users.id::text) AS messages
+      FROM users;`
     );
 
-    res.send(userMessage.rows);
+    const userMessageFormat = formatMessage(userMessage.rows);
+
+    res.send(userMessageFormat);
   } catch (error) {
     res.status(500).send(error.message);
   }
