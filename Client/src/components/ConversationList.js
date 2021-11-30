@@ -13,7 +13,12 @@ function ConversationList({ handleClick }) {
 
   useEffect(() => {
     getAllUsersMessages();
-  }, []);
+
+    // TODO: Properly clean up the useEffect
+    return () => {
+    //   getAllUsersMessages();
+    }
+  });
 
   async function getAllUsersMessages() {
     try {
