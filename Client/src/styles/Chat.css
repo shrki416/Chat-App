@@ -148,3 +148,21 @@
 ::-webkit-scrollbar {
   display: none;
 }
+
+.offline {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: var(--danger);
+  margin-right: 6px;
+}
+
+.online {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: var(--success);
+  margin-right: 6px;
+}
