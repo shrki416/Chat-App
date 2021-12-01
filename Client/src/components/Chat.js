@@ -52,7 +52,7 @@ const Chat = ({ auth }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleClick(e, id, msgs) {
+  function handleClick(e, id) {
     setReceiverId(id);
     localStorage.setItem("mate", id);
     setReceiverName("");
