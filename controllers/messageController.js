@@ -46,7 +46,7 @@ const userMessages = async (req, res) => {
         users.id,
         users.firstName,
         users.lastName,
-        users.email,
+        users.last_active_at,
         (SELECT json_build_array(array_agg(json_build_object(
           'message', messages.message,
           'receiverId', messages.receiver_id,
