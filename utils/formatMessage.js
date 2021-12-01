@@ -1,11 +1,12 @@
 function formatMessage(query) {
   return query.map((messageData) => {
-    const { id, firstname, lastname, email, messages } = messageData;
+    // eslint-disable-next-line camelcase
+    const { id, firstname, lastname, last_active_at, messages } = messageData;
 
     const data = {
       id,
       name: `${firstname} ${lastname}`,
-      email,
+      active: last_active_at,
       message: messages.map((message) => message[message.length - 1]) || [],
     };
 
