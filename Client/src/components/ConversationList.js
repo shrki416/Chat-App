@@ -72,7 +72,7 @@ function ConversationList({ handleClick, lastReceivedMessage }) {
 
     const receivedByMe = message[0]?.receiverId === id;
 
-console.log({ userMessage, receivedByMe, message: message[0], id });
+// console.log({ userMessage, receivedByMe, message: message[0], id });
 
     return (
       <div className="conversation" key={id}>
