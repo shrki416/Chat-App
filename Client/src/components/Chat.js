@@ -22,22 +22,17 @@ const Chat = ({ auth }) => {
   const socket = io();
 
   socket.on("message", (message) => {
-      const mate = localStorage.getItem("mate");
-      const me  = localStorage.getItem("me");
-
-    console.log({ message, mate, me})
+    const mate = localStorage.getItem("mate");
+    const me = localStorage.getItem("me");
 
     if (
-      (message.receiver_id === mate &&
-        message.user_id === me) ||
-      (message.receiver_id === me &&
-        message.user_id === mate)
+      (message.receiver_id === mate && message.user_id === me) ||
+      (message.receiver_id === me && message.user_id === mate)
     ) {
       setMessages((messages) => [...messages, message]);
-
-      setLastReceivedMessage({ ...message, un_opened: false });
+      setLastReceivedMessage({ ...message });
     } else {
-        setLastReceivedMessage({ ...message, un_opened: true });
+      setLastReceivedMessage({ ...message });
     }
   });
 
@@ -110,13 +105,13 @@ const Chat = ({ auth }) => {
 
   async function getMessages(userId, chatMateId, recverName) {
     try {
-    const response = await axios.get(`/api/message/${userId}/${chatMateId}`);
-    response.data.forEach((message) => {
+      const response = await axios.get(`/api/message/${userId}/${chatMateId}`);
+      response.data.forEach((message) => {
         if (message.user_id !== userId) {
-            message["from"] = recverName;
+          message["from"] = recverName;
         }
-    });
-    setMessages(response.data);
+      });
+      setMessages(response.data);
     } catch (error) {
       console.error(error.message);
     }
