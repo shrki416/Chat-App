@@ -17,17 +17,27 @@ const Chat = ({ auth }) => {
   const [user, setUser] = useState("");
   const [receiverId, setReceiverId] = useState("");
   const [receiverName, setReceiverName] = useState("");
+  const [lastReceivedMessage, setLastReceivedMessage] = useState({});
 
   const socket = io();
 
   socket.on("message", (message) => {
+      const mate = localStorage.getItem("mate");
+      const me  = localStorage.getItem("me");
+
+    console.log({ message, mate, me})
+
     if (
-      (message.receiver_id === localStorage.getItem("mate") &&
-        message.user_id === localStorage.getItem("me")) ||
-      (message.receiver_id === localStorage.getItem("me") &&
-        message.user_id === localStorage.getItem("mate"))
+      (message.receiver_id === mate &&
+        message.user_id === me) ||
+      (message.receiver_id === me &&
+        message.user_id === mate)
     ) {
       setMessages((messages) => [...messages, message]);
+
+      setLastReceivedMessage({ ...message, un_opened: false });
+    } else {
+        setLastReceivedMessage({ ...message, un_opened: true });
     }
   });
 
@@ -121,7 +131,10 @@ const Chat = ({ auth }) => {
           <div id="search-container">
             <input type="text" name="search-message-box" placeholder="Search" />
           </div>
-          <ConversationList handleClick={handleClick} />
+          <ConversationList
+            handleClick={handleClick}
+            lastReceivedMessage={lastReceivedMessage}
+          />
           <div id="new-message-container">
             <AddCircleIcon fontSize="large" id="add-icon" />
           </div>
