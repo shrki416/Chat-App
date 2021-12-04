@@ -9,14 +9,15 @@ const devErrors = (error, req, res, next) => {
     stack: error.stack,
   };
 
-  res.status(error.status || 500).json(errorDetails);
+  res.status(error?.status || 500).json(errorDetails);
+  console.log(error);
 };
 
 const prodErrors = (error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
     message: error.message,
-    error: {},
+    error: 'Internal Server Error',
   });
 };
 
