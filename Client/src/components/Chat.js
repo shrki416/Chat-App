@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import ChatForm from "./ChatForm";
+import ChatList from './ChatList'
 import ChatMessages from "./ChatMessages";
 import ConversationList from "./ConversationList";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -130,6 +131,7 @@ const Chat = ({ auth }) => {
             handleClick={handleClick}
             lastReceivedMessage={lastReceivedMessage}
           />
+            <ChatList/>
           <div id="new-message-container">
             <AddCircleIcon fontSize="large" id="add-icon" />
           </div>
