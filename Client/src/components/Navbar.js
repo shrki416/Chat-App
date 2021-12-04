@@ -12,11 +12,10 @@ function Navbar({ auth, user }) {
       const email = localStorage.getItem("email");
       const response = await axios.post("/api/logout", { email });
 
-      toast.success(<h3>👋 {response.data.message}</h3>);
+      toast.success(<h3>{response.data.message}</h3>);
 
       if (response.status === 200) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("email");
+        localStorage.removeItem("token", "email");
         auth(false);
       }
     } catch (error) {
@@ -26,9 +25,11 @@ function Navbar({ auth, user }) {
 
   return (
     <div id="navbar" className="card-shadow">
-      <h2>Chat-App</h2>
+      <h1>Chat-App</h1>
       <p>{user && `Welcome, ${user.firstname} ${user.lastname}!`}</p>
-      <button onClick={(e) => logout(e)}>LOGOUT</button>
+      <button onClick={(e) => logout(e)}>
+        LOGOUT
+      </button>
     </div>
   );
 }
