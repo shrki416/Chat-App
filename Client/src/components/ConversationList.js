@@ -10,6 +10,7 @@ import axios from "axios";
 function ConversationList({ handleClick, lastReceivedMessage }) {
   const [messageMetaData, setMessageMetaData] = useState([]);
   const LOGGED_IN_USER = localStorage.getItem("me");
+  const checkForNewMessages = JSON.stringify(lastReceivedMessage);
 
   useEffect(() => {
     async function getUserLastMessage() {
@@ -22,38 +23,38 @@ function ConversationList({ handleClick, lastReceivedMessage }) {
     }
 
     getUserLastMessage();
-  }, []);
+  }, [checkForNewMessages]);
 
-  console.log({ messageMetaData });
+  //   console.log({ messageMetaData });
 
-  useEffect(() => {
-    if (lastReceivedMessage.receiver_id) {
-      const me = localStorage.getItem("me");
+  //   useEffect(() => {
+  //     if (lastReceivedMessage.receiver_id) {
+  //       const me = localStorage.getItem("me");
 
-      let modiList = [...messageMetaData];
+  //       let modiList = [...messageMetaData];
 
-      console.log({ lastReceivedMessage });
-      modiList.length &&
-        modiList.forEach((item, index) => {
-          console.log(item);
+  //       console.log({ lastReceivedMessage });
+  //       modiList.length &&
+  //         modiList.forEach((item, index) => {
+  //           console.log(item);
 
-          if (
-            (item.id === lastReceivedMessage.receiver_id &&
-              me === lastReceivedMessage.user_id) ||
-            (item.id === lastReceivedMessage.user_id &&
-              me === lastReceivedMessage.receiver_id)
-          ) {
-            modiList[index].message = [
-              {
-                ...lastReceivedMessage,
-                receiverId: lastReceivedMessage.receiver_id,
-              },
-            ];
-          }
-        });
-      setMessageMetaData(modiList);
-    }
-  }, [JSON.stringify(lastReceivedMessage)]);
+  //           if (
+  //             (item.id === lastReceivedMessage.receiver_id &&
+  //               me === lastReceivedMessage.user_id) ||
+  //             (item.id === lastReceivedMessage.user_id &&
+  //               me === lastReceivedMessage.receiver_id)
+  //           ) {
+  //             modiList[index].message = [
+  //               {
+  //                 ...lastReceivedMessage,
+  //                 receiverId: lastReceivedMessage.receiver_id,
+  //               },
+  //             ];
+  //           }
+  //         });
+  //       setMessageMetaData(modiList);
+  //     }
+  //   }, [JSON.stringify(lastReceivedMessage)]);
 
   const conversations = messageMetaData.map((userMessage) => {
     const { id, name, active, message } = userMessage;
@@ -67,7 +68,7 @@ function ConversationList({ handleClick, lastReceivedMessage }) {
       return null;
     }
 
-    const receivedByMe = message[0]?.receiverId === id;
+    // const receivedByMe = message[0]?.receiverId === id;
 
     // console.log({ userMessage, receivedByMe, message: message[0], id });
 
@@ -79,7 +80,8 @@ function ConversationList({ handleClick, lastReceivedMessage }) {
         </div>
         <div className="created-date">{created}</div>
         <div className="conversation-message">
-          {receivedByMe ? "I Sent:" : "Received:"} {lastMessage}
+          {/* {receivedByMe ? "I Sent:" : "Received:"} {lastMessage} */}
+          {lastMessage}
         </div>
       </div>
     );
