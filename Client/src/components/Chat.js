@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import ChatForm from "./ChatForm";
-import ChatList from './ChatList'
+import ChatList from "./ChatList";
 import ChatMessages from "./ChatMessages";
 import ConversationList from "./ConversationList";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -38,21 +38,24 @@ const Chat = ({ auth }) => {
   });
 
   useEffect(() => {
+    let isMounted = true;
     socket.on("connect", () => {
-      console.log("connected to server", socket.id);
-      getUserProfile();
+      if (isMounted) {
+        console.log("connected to server", socket.id);
+        getUserProfile();
+      }
     });
 
-    socket.on("login", ({ activeUsers }) => {
-      console.log("🍏", activeUsers);
-    });
+    // socket.on("login", ({ activeUsers }) => {
+    //   console.log("🍏", activeUsers);
+    // });
 
-    socket.on("logout", ({ name }) => {
-      console.log(`🍌`, name);
-    });
+    // socket.on("logout", ({ name }) => {
+    //   console.log(`🍌`, name);
+    // });
 
     return () => {
-      socket.off();
+      isMounted = false;
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,13 +72,13 @@ const Chat = ({ auth }) => {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const { id, email } = user;
+    const { id, email, firstname, lastname } = user;
 
     const data = {
       userId: id,
       userEmail: email,
       message: input,
-      from: `${user.firstname} ${user.lastname}`,
+      from: `${firstname} ${lastname}`,
       receiverId: receiverId,
     };
 
@@ -131,7 +134,7 @@ const Chat = ({ auth }) => {
             handleClick={handleClick}
             lastReceivedMessage={lastReceivedMessage}
           />
-            <ChatList/>
+          <ChatList />
           <div id="new-message-container">
             <AddCircleIcon fontSize="large" id="add-icon" />
           </div>
