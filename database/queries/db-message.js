@@ -2,9 +2,9 @@ const pool = require('../db');
 
 const privateMessagesQuery = async (userId, chatMateId) => {
   const privateMessages = await pool.query(
-    `SELECT * FROM messages WHERE
-  (user_id = $1 AND receiver_id = $2)
-  OR (user_id = $2 AND receiver_id = $1)`,
+    `SELECT * FROM messages
+    WHERE (user_id = $1 AND receiver_id = $2)
+    OR (user_id = $2 AND receiver_id = $1)`,
     [userId, chatMateId]
   );
 
@@ -12,10 +12,8 @@ const privateMessagesQuery = async (userId, chatMateId) => {
 };
 
 const createMessageQuery = async (userId, message, receiverId) => {
-  const createMessage = await pool.query(
-    `INSERT INTO messages(user_id, message, receiver_id) VALUES($1, $2, $3) RETURNING *`,
-    [userId, message, receiverId]
-  );
+  const query = `INSERT INTO messages(user_id, message, receiver_id) VALUES($1, $2, $3) RETURNING *`;
+  const createMessage = await pool.query(query, [userId, message, receiverId]);
 
   return createMessage;
 };
