@@ -35,6 +35,7 @@ const register = async (req, res) => {
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
+  const io = req.app.get('socketio');
 
   const user = await userQuery(email);
 
@@ -50,11 +51,10 @@ const login = async (req, res, next) => {
   updateActiveUsersOnLoginQuery(email);
 
   const activeUsers = await queryActiveUsers();
+  const activeUsersIds = activeUsers.map((data) => data.id);
 
-  const io = req.app.get('socketio');
-  io.on('connect', (socket) => {
-    socket.emit('login', { activeUsers });
-  });
+  //   console.log(`🍌`, activeUsersIds);
+  io.emit('login', { activeUsers: activeUsersIds });
 
   const token = jwtGenerator(user.id);
   const firstName = user.firstname;
@@ -69,8 +69,11 @@ const logout = async (req, res) => {
   updateActiveUsersOnLogoutQuery(email);
 
   const activeUsers = await queryActiveUsers();
+  const activeUsersIds = activeUsers.map((user) => user.id);
 
-  io.emit('logout', { activeUsers });
+  //   console.log(`🍌`, activeUsersIds);
+
+  io.emit('logout', { activeUsers: activeUsersIds });
 
   res.json({ message: `Bye 👋 see you soon!` });
 };
