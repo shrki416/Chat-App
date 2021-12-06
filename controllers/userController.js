@@ -14,6 +14,9 @@ const users = async (req, res) => {
 const activeUsers = async (req, res) => {
   try {
     const active = await getActiveUsers();
+
+    // console.log(active.map((user) => user.id));
+
     if (active) res.send(active);
   } catch (error) {
     console.error(error.message);
