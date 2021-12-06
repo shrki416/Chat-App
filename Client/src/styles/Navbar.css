@@ -33,6 +33,5 @@
 #navbar p {
   color: var(--bg-gray);
   align-self: center;
-  font-size: 1.75rem;
-  font-weight: 600;
+  font-size: 1.5rem;
 }
