@@ -46,14 +46,6 @@ const Chat = ({ auth }) => {
       }
     });
 
-    // socket.on("login", ({ activeUsers }) => {
-    //   console.log("🍏", activeUsers);
-    // });
-
-    // socket.on("logout", ({ name }) => {
-    //   console.log(`🍌`, name);
-    // });
-
     return () => {
       isMounted = false;
     };
