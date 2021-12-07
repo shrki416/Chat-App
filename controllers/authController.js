@@ -51,10 +51,8 @@ const login = async (req, res, next) => {
   updateActiveUsersOnLoginQuery(email);
 
   const activeUsers = await queryActiveUsers();
-  const activeUsersIds = activeUsers.map((data) => data.id);
 
-  //   console.log(`🍌`, activeUsersIds);
-  io.emit('login', { activeUsers: activeUsersIds });
+  io.emit('login', { activeUsers });
 
   const token = jwtGenerator(user.id);
   const firstName = user.firstname;
@@ -69,11 +67,8 @@ const logout = async (req, res) => {
   updateActiveUsersOnLogoutQuery(email);
 
   const activeUsers = await queryActiveUsers();
-  const activeUsersIds = activeUsers.map((user) => user.id);
 
-  //   console.log(`🍌`, activeUsersIds);
-
-  io.emit('logout', { activeUsers: activeUsersIds });
+  io.emit('logout', { activeUsers });
 
   res.json({ message: `Bye 👋 see you soon!` });
 };
