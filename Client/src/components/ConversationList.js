@@ -19,8 +19,8 @@ function ConversationList({ handleClick, lastReceivedMessage }) {
   useEffect(() => {
     async function getUserLastMessage() {
       try {
-        const response = await axios.get(`/api/userMessages`);
-        setMessageMetaData(response.data);
+        const { data } = await axios.get(`/api/userMessages`);
+        setMessageMetaData(data);
       } catch (error) {
         console.error(error.message);
       }
@@ -31,12 +31,11 @@ function ConversationList({ handleClick, lastReceivedMessage }) {
 
   useEffect(() => {
     let isMounted = true;
+
     async function getActiveUsers() {
       try {
-        const response = await axios.get(`/api/user/active`);
-        if (isMounted) {
-          setActive(response.data);
-        }
+        const { data } = await axios.get(`/api/user/active`);
+        if (isMounted) setActive(data);
       } catch (error) {
         console.error(error.message);
       }
@@ -52,22 +51,20 @@ function ConversationList({ handleClick, lastReceivedMessage }) {
     };
   }, []);
 
-  // console.log(`🍏`, active.map(user => user.id));
-
   const conversations = messageMetaData.map((userMessage) => {
     const { id, name, message } = userMessage;
 
-    const activeUserId = active.map((user) => user.id).includes(id);
+    const isActive = active.map((user) => user.id).includes(id);
 
-    // console.log(`🍎`, id);
-    // console.log(`🍌`, activeUserId);
+    const lastMessage = message.map((msg) => {
+      return msg.receiverId === LOGGED_IN_USER
+        ? `💬 ${msg.message}`
+        : "no new messages";
+    });
 
-    const lastMessage = message.map((msg) => msg.message);
     const created = message.map((msg) =>
       timeago.format(msg.created_at, "en_US")
     );
-    // const sender = message.map((msg) => msg.receiverId);
-    // console.log(sender);
 
     if (LOGGED_IN_USER === id) {
       return null;
@@ -77,8 +74,7 @@ function ConversationList({ handleClick, lastReceivedMessage }) {
       <div className="conversation" key={id}>
         <AccountCircleIcon fontSize="large" />
         <div className="title-text" onClick={(e) => handleClick(e, id)}>
-          {name}{" "}
-          <span className={`${activeUserId ? "online" : "offline"}`}></span>
+          {name} <span className={`${isActive ? "online" : "offline"}`}></span>
         </div>
         <div className="created-date">{created}</div>
         <div className="conversation-message">{lastMessage}</div>
