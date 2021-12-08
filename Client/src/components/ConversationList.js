@@ -71,9 +71,13 @@ function ConversationList({ handleClick, lastReceivedMessage }) {
     }
 
     return (
-      <div className="conversation" key={id}>
+      <div
+        className="conversation"
+        key={id}
+        onClick={(e) => handleClick(e, id, name)}
+      >
         <AccountCircleIcon fontSize="large" />
-        <div className="title-text" onClick={(e) => handleClick(e, id)}>
+        <div className="title-text">
           {name} <span className={`${isActive ? "online" : "offline"}`}></span>
         </div>
         <div className="created-date">{created}</div>
