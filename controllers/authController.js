@@ -57,7 +57,7 @@ const login = async (req, res, next) => {
   const token = jwtGenerator(user.id);
   const firstName = user.firstname;
 
-  res.json({ token, email, firstName });
+  res.json({ token, firstName });
 };
 
 const logout = async (req, res) => {
