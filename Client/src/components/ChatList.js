@@ -1,16 +1,26 @@
-import '../styles/Chat.css';
+import "../styles/Chat.css";
 
-import React from 'react'
+import React from "react";
 
-function ChatList() {
-    return (
-      <div id="chat-list">
+function ChatList({ channels, setIsChannel, setChannel }) {
+  function handleClick(e) {
+    const channel = e.target.textContent;
+    setIsChannel(true);
+    setChannel(channel);
+  }
+
+  return (
+    <div id="chat-list">
       <h2>Channels</h2>
-        <div className='conversation'>Programming</div>
-        <div className='conversation'>General</div>
-        <div className='conversation'>Running</div>
-      </div>
-    );
+      {channels.map((channel, index) => {
+        return (
+          <div className="conversation" key={index} onClick={handleClick}>
+            {channel}
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export default ChatList;
