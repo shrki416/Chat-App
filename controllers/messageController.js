@@ -21,8 +21,7 @@ const messages = async (req, res) => {
     const { userId, message, from, receiverId } = req.body;
 
     const createMessage = await createMessageQuery(userId, message, receiverId);
-    const result = createMessage.rows[0];
-    result.from = from;
+    const result = { ...createMessage.rows[0], from };
 
     io.in(userId).emit('message', result);
     io.in(receiverId).emit('message', result);
