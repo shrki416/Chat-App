@@ -21,7 +21,6 @@ function Login({ auth }) {
       const body = { email, password };
       const response = await axios.post("/api/login", body);
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("email", response.data.email);
       auth(true);
       toast.success(<h3>🙂 Welcome, {response.data.firstName}!</h3>);
     } catch (error) {
