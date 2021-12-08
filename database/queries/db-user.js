@@ -9,7 +9,7 @@ const getUser = async (id) => {
 };
 
 const getActiveUsers = async () => {
-  const userQuery = `SELECT id, firstname, lastname FROM users WHERE last_active_at >= now() - interval '1 hr'`;
+  const userQuery = `SELECT id, firstname, lastname FROM users WHERE last_active_at >= now() - interval '12 hr'`;
 
   const active = await pool.query(userQuery);
 
