@@ -7,7 +7,6 @@ import ChatForm from "./ChatForm";
 import ChatList from "./ChatList";
 import ChatMessages from "./ChatMessages";
 import ConversationList from "./ConversationList";
-import DeleteIcon from "@material-ui/icons/Delete";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { io } from "socket.io-client";
@@ -19,6 +18,13 @@ const Chat = ({ auth }) => {
   const [receiverId, setReceiverId] = useState("");
   const [receiverName, setReceiverName] = useState("");
   const [lastReceivedMessage, setLastReceivedMessage] = useState({});
+  const [isChannel, setIsChannel] = useState(false);
+  const [channel, setChannel] = useState("");
+  const [channels, setChannels] = useState([
+    "Programming",
+    "General",
+    "Random",
+  ]);
 
   const socket = io();
 
@@ -53,16 +59,18 @@ const Chat = ({ auth }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleClick(e, id) {
+  function handleClick(e, id, name) {
     setReceiverId(id);
     localStorage.setItem("mate", id);
     setReceiverName("");
-    setReceiverName(e.target.textContent);
-    getMessages(user.id, id, e.target.textContent);
+    setReceiverName(name);
+    getMessages(user.id, id, name);
+    setIsChannel(false);
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (!input) return;
 
     const { id, email, firstname, lastname } = user;
 
@@ -99,12 +107,12 @@ const Chat = ({ auth }) => {
     }
   }
 
-  async function getMessages(userId, chatMateId, recverName) {
+  async function getMessages(userId, chatMateId, recieverName) {
     try {
       const response = await axios.get(`/api/message/${userId}/${chatMateId}`);
       response.data.forEach((message) => {
         if (message.user_id !== userId) {
-          message["from"] = recverName;
+          message["from"] = recieverName;
         }
       });
       setMessages(response.data);
@@ -126,15 +134,21 @@ const Chat = ({ auth }) => {
             handleClick={handleClick}
             lastReceivedMessage={lastReceivedMessage}
           />
-          <ChatList />
+          <ChatList
+            setIsChannel={setIsChannel}
+            channels={channels}
+            setChannel={setChannel}
+          />
           <div id="new-message-container">
             <AddCircleIcon fontSize="large" id="add-icon" />
           </div>
           <div id="chat-title" className="card-shadow">
-            <span>To: {receiverName}</span>
-            <DeleteIcon fontSize="large" id="delete-icon" />
+            {isChannel ? `In: ${channel}` : `To: ${receiverName}`}
           </div>
-          <ChatMessages messageList={messages} user={user} />
+          <ChatMessages
+            messageList={messages}
+            user={user}
+          />
           <ChatForm
             handleSubmit={handleSubmit}
             setInput={setInput}
