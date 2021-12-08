@@ -9,7 +9,7 @@ function Navbar({ auth, user }) {
     e.preventDefault();
 
     try {
-      const email = localStorage.getItem("email");
+      const { email } = user;
       const response = await axios.post("/api/logout", { email });
 
       toast.success(<h3>{response.data.message}</h3>);
