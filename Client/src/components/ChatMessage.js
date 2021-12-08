@@ -4,10 +4,11 @@ import React, { useCallback } from "react";
 
 function ChatMessage({ message, user }) {
   const id = message.user_id;
-  const chatBubbles = user.id === id ? "you-message" : "other-message";
-
+  const LOGGED_IN_USER = user.id === id;
   const { firstname, lastname } = user;
-  const userBubble = user.id === id ? `${firstname} ${lastname}` : message.from;
+
+  const chatBubbles = LOGGED_IN_USER ? "you-message" : "other-message";
+  const userBubble = LOGGED_IN_USER ? `${firstname} ${lastname}` : message.from;
 
   const formatDate = (date) => {
     const messageDate = new Date(date);
@@ -27,9 +28,10 @@ function ChatMessage({ message, user }) {
     <>
       <div className={`message-row ${chatBubbles}`} ref={setRef}>
         <div className="message-content">
+          {LOGGED_IN_USER && <div className="delete-button">x</div>}
           <div className="message-text card-shadow">{message.message}</div>
           <div className="message-date">
-            {userBubble} {formatDate(message.created_at)}
+            {userBubble} - {formatDate(message.created_at)}
           </div>
         </div>
       </div>
