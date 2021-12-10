@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "dev": "concurrently \"npm run start\" \"npm run watch --prefix client\"",
-    "init-db-setup": "psql -f './database/create-db.sql' && psql -d test -f './database/db.sql'",
+    "init-db-setup": "psql -f './database/create-db.sql' && psql -d chat -f './database/db.sql'",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
