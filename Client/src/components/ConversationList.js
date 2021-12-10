@@ -51,21 +51,19 @@ function ConversationList({ handleClick, lastReceivedMessage }) {
     };
   }, []);
 
-  console.log(`🍏`, lastReceivedMessage);
-
   const conversations = messageMetaData.map((userMessage) => {
     const { id, name, message } = userMessage;
 
     const isActive = active.map((user) => user.id).includes(id);
 
     const lastMessage = message.map((msg) => {
-      return msg.receiverId === LOGGED_IN_USER
-        ? `💬 ${msg.message}`
+      return msg?.receiverId === LOGGED_IN_USER
+        ? `💬 ${msg?.message}`
         : "no new messages";
     });
 
     const created = message.map((msg) =>
-      timeago.format(msg.created_at, "en_US")
+      timeago.format(msg?.created_at, "en_US")
     );
 
     if (LOGGED_IN_USER === id) {
