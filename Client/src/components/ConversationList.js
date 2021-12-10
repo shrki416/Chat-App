@@ -51,6 +51,8 @@ function ConversationList({ handleClick, lastReceivedMessage }) {
     };
   }, []);
 
+  console.log(`🍏`, lastReceivedMessage);
+
   const conversations = messageMetaData.map((userMessage) => {
     const { id, name, message } = userMessage;
 
