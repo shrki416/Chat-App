@@ -10,7 +10,7 @@ BEGIN
         password character varying(255) NOT NULL,
         last_active_at timestamp with time zone DEFAULT now()
     );
-    RAISE NOTICE `users table created 🎉`;
+    RAISE NOTICE 'users table created 🎉';
 
     CREATE TABLE messages (
         id uuid DEFAULT uuid_generate_v4() NOT NULL,
@@ -19,6 +19,6 @@ BEGIN
         created_at timestamp with time zone DEFAULT now(),
         receiver_id text NOT NULL
     );
-    RAISE NOTICE `messages table created 🎉`;
+    RAISE NOTICE 'messages table created 🎉';
 END
 $do$;
