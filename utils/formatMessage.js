@@ -6,7 +6,10 @@ function formatMessage(query) {
     const data = {
       id,
       name: `${firstname} ${lastname}`,
-      message: messages.map((message) => message[message.length - 1]) || [],
+      message:
+        messages.map((message) =>
+          !message ? null : message[message.length - 1]
+        ) || [],
     };
 
     return data;
