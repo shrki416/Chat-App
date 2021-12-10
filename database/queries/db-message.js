@@ -4,7 +4,7 @@ const privateMessagesQuery = async (userId, chatMateId) => {
   const privateMessages = await pool.query(
     `SELECT * FROM messages
     WHERE (user_id = $1 AND receiver_id = $2)
-    OR (user_id = $2 AND receiver_id = $1)`,
+    OR (user_id = $2 AND receiver_id = $1) ORDER BY created_at ASC;`,
     [userId, chatMateId]
   );
 
