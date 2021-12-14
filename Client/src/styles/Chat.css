@@ -41,7 +41,7 @@
 }
 
 #search-container input {
-  color: #eee;
+  color: var(--white);
   outline: none;
   font-weight: bold;
   border-radius: 2px;
@@ -56,7 +56,7 @@
 }
 
 #search-container input::placeholder {
-  color: #ddd;
+  color: var(--white);
   font-weight: bold;
 }
 
@@ -69,15 +69,16 @@
   display: grid;
   grid-template-columns: 20px 1fr max-content;
   grid-gap: 5px;
-  color: #ddd;
+  color: var(--white);
   font-size: 1.2rem;
-  border-bottom: 1px solid #002c88;
+  border-bottom: 1px solid var(--bg-secondary);
   padding: 20px 20px 20px 15px;
+  align-items: center;
 }
 
 .conversation.active,
 .conversation:hover {
-  background: #002c88;
+  background: var(--bg-secondary);
 }
 
 .conversation:hover {
@@ -86,15 +87,16 @@
 
 .title-text {
   font-weight: bold;
-  color: #eee;
-  padding-left: 5px;
+  color: var(--white);
+  padding-left: 20px;
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
+  font-size: 1.25rem;
 }
 
 .created-date {
-  color: #ddd;
+  color: var(--white);
   white-space: nowrap;
   font-size: 1.2rem;
 }
@@ -119,7 +121,7 @@
 
 #chat-title,
 #chat-form {
-  background: #eee;
+  background: var(--white);
 }
 
 #chat-title {
@@ -128,7 +130,7 @@
   align-content: center;
   align-items: center;
   grid-area: chat-title;
-  color: #0048aa;
+  color: var(--bg-main);
   font-weight: bold;
   font-size: 1.75rem;
   border-radius: 0 10px 0 0;
