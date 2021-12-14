@@ -24,7 +24,8 @@
 
 .message-date {
   font-size: 1.3rem;
-  color: #777;
+  color: var(--bg-gray);
+  opacity: 0.75;
 }
 
 .message-text {
@@ -35,14 +36,14 @@
 
 .you-message .message-text {
   background: var(--bg-main);
-  color: #eee;
+  color: var(--white);
   border: 1px solid var(--bg-gray);
   border-radius: 14px 14px 0 14px;
 }
 
 .other-message .message-text {
-  background: #eee;
-  color: #111;
+  background: var(--white);
+  color: var(--black);
   border: 1px solid var(--bg-main);
   border-radius: 14px 14px 14px 0;
 }
