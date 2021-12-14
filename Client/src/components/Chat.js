@@ -2,7 +2,7 @@ import "../styles/Chat.css";
 
 import React, { useEffect, useState } from "react";
 
-import AddCircleIcon from "@material-ui/icons/AddCircle";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ChatForm from "./ChatForm";
 import ChatList from "./ChatList";
 import ChatMessages from "./ChatMessages";
@@ -20,7 +20,7 @@ const Chat = ({ auth }) => {
   const [lastReceivedMessage, setLastReceivedMessage] = useState({});
   const [isChannel, setIsChannel] = useState(false);
   const [channel, setChannel] = useState("");
-  const [channels, setChannels] = useState([
+  const [channels] = useState([
     "Programming",
     "General",
     "Random",
