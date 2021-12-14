@@ -3,6 +3,8 @@ const {
   privateMessagesQuery,
   createMessageQuery,
   userMessagesQuery,
+  createChannelMsgQuery,
+  channelMessageQuery,
 } = require('../database/queries/db-message');
 
 const privateMessage = async (req, res) => {
@@ -41,8 +43,38 @@ const userMessages = async (req, res) => {
   }
 };
 
+const createChannelMessages = async (req, res) => {
+  //   const io = req.app.get('socketio');
+  try {
+    const { userId, message, from, channel } = req.body;
+
+    const createMessage = await createChannelMsgQuery(userId, message, channel);
+    const result = { ...createMessage.rows[0], from };
+
+    // io.in(userId).emit("message", result);
+    // io.in(receiverId).emit("message", result);
+    console.log(`📦`, result);
+
+    res.send('hello');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+const getChannelMessages = async (req, res) => {
+  try {
+    const { channel } = req.params;
+    const channelMessages = await channelMessageQuery(channel);
+    res.send(channelMessages);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   privateMessage,
   messages,
   userMessages,
+  createChannelMessages,
+  getChannelMessages,
 };
