@@ -1,4 +1,5 @@
 const pool = require('../db');
+const { getUser } = require('./db-user');
 
 const privateMessagesQuery = async (userId, chatMateId) => {
   const privateMessages = await pool.query(
@@ -35,8 +36,28 @@ const userMessagesQuery = async () => {
   return userMessage.rows;
 };
 
+const createChannelMsgQuery = async (userId, message, channel) => {
+  const query = `INSERT INTO messages(user_id, message, channel) VALUES($1, $2, $3) RETURNING *`;
+  const createMessage = await pool.query(query, [userId, message, channel]);
+
+  return createMessage;
+};
+
+const channelMessageQuery = async (channel) => {
+  const query = `SELECT * FROM messages WHERE channel = $1 ORDER BY created_at ASC`;
+  const channelMessages = await pool.query(query, [channel]);
+  const id = channelMessages.rows[0].user_id;
+  const user = await getUser(id);
+
+  channelMessages.rows[0].from = `${user.firstname} ${user.lastname}`;
+
+  return channelMessages.rows;
+};
+
 module.exports = {
   privateMessagesQuery,
   createMessageQuery,
   userMessagesQuery,
+  createChannelMsgQuery,
+  channelMessageQuery,
 };
