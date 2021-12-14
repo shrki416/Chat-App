@@ -2,11 +2,12 @@ import "../styles/Chat.css";
 
 import React from "react";
 
-function ChatList({ channels, setIsChannel, setChannel }) {
+function ChatList({ channels, setIsChannel, setChannel, getChatMessages }) {
   function handleClick(e) {
     const channel = e.target.textContent;
     setIsChannel(true);
     setChannel(channel);
+    getChatMessages(channel);
   }
 
   return (
@@ -14,8 +15,12 @@ function ChatList({ channels, setIsChannel, setChannel }) {
       <h2>Channels</h2>
       {channels.map((channel, index) => {
         return (
-          <div className="conversation" key={index} onClick={handleClick}>
-            {channel}
+          <div
+            className="conversation"
+            key={`${index}_${channel}`}
+            onClick={handleClick}
+          >
+            <h3>{channel}</h3>
           </div>
         );
       })}
