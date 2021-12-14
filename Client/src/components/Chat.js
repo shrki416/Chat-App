@@ -20,11 +20,7 @@ const Chat = ({ auth }) => {
   const [lastReceivedMessage, setLastReceivedMessage] = useState({});
   const [isChannel, setIsChannel] = useState(false);
   const [channel, setChannel] = useState("");
-  const [channels] = useState([
-    "Programming",
-    "General",
-    "Random",
-  ]);
+  const [channels] = useState(["Programming", "General", "Random"]);
 
   const socket = io();
 
@@ -80,14 +76,28 @@ const Chat = ({ auth }) => {
       message: input,
       from: `${firstname} ${lastname}`,
       receiverId: receiverId,
+      channel,
     };
+
+    if (!isChannel && !receiverId) {
+      alert("Please select a user or a channel to send a message to");
+    }
 
     if (receiverId !== null && receiverId !== "") {
       axios.post("/api/message", data);
-      setInput("");
-    } else {
-      alert("Select a buddy to chat with");
     }
+
+    if (isChannel) {
+      axios.post("/api/channel", data);
+    }
+
+    // if (receiverId !== null && receiverId !== "") {
+    //   axios.post("/api/message", data);
+    //   setInput("");
+    // } else {
+    //   alert("Select a buddy to chat with");
+    // }
+    setInput("");
   }
 
   async function getUserProfile() {
@@ -109,13 +119,23 @@ const Chat = ({ auth }) => {
 
   async function getMessages(userId, chatMateId, recieverName) {
     try {
-      const response = await axios.get(`/api/message/${userId}/${chatMateId}`);
-      response.data.forEach((message) => {
+      const { data } = await axios.get(`/api/message/${userId}/${chatMateId}`);
+      data.map((message) => {
         if (message.user_id !== userId) {
-          message["from"] = recieverName;
+          message.from = recieverName;
         }
+        return message;
       });
-      setMessages(response.data);
+      setMessages(data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  async function getChatMessages(channel) {
+    try {
+      const { data } = await axios.get(`/api/channel/${channel}`);
+      setMessages(data);
     } catch (error) {
       console.error(error.message);
     }
@@ -138,17 +158,15 @@ const Chat = ({ auth }) => {
             setIsChannel={setIsChannel}
             channels={channels}
             setChannel={setChannel}
+            getChatMessages={getChatMessages}
           />
           <div id="new-message-container">
             <AddCircleIcon fontSize="large" id="add-icon" />
           </div>
-          <div id="chat-title" className="card-shadow">
+          <div id="chat-title" className="shadow-light">
             {isChannel ? `In: ${channel}` : `To: ${receiverName}`}
           </div>
-          <ChatMessages
-            messageList={messages}
-            user={user}
-          />
+          <ChatMessages messageList={messages} user={user} />
           <ChatForm
             handleSubmit={handleSubmit}
             setInput={setInput}
