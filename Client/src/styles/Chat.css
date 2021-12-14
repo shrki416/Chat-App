@@ -67,7 +67,7 @@
 
 .conversation {
   display: grid;
-  grid-template-columns: 20px 1fr max-content;
+  grid-template-columns: 40px 1fr max-content;
   grid-gap: 5px;
   color: var(--white);
   font-size: 1.2rem;
@@ -88,7 +88,6 @@
 .title-text {
   font-weight: bold;
   color: var(--white);
-  padding-left: 20px;
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
@@ -121,20 +120,19 @@
 
 #chat-title,
 #chat-form {
-  background: var(--white);
+  background: var(--bg-secondary);
 }
 
 #chat-title {
   display: grid;
+  grid-area: chat-title;
   grid: 36px / 1fr 36px;
   align-content: center;
   align-items: center;
-  grid-area: chat-title;
-  color: var(--bg-main);
+  color: var(--white);
   font-weight: bold;
   font-size: 1.75rem;
-  border-radius: 0 10px 0 0;
-  box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.75);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
   padding: 0 20px;
 }
 
@@ -143,10 +141,14 @@
   color: var(--bg-grey);
 }
 
-#delete-icon,
+#emoji-icon,
 #send-icon {
-  font-size: 4rem;
-  color: var(--bg-main);
+  font-size: 3rem;
+  color: var(--bg-gray);
+}
+
+#emoji-icon {
+  opacity: 0.75;
 }
 
 ::-webkit-scrollbar {
