@@ -2,12 +2,11 @@
 
 #chat-form {
   display: grid;
-  /* grid: 51px / 32px 1fr; */
+  grid-area: chat-form;
   grid: 51px / 1fr 51px;
   align-content: center;
   align-items: center;
   grid-gap: 15px;
-  grid-area: chat-form;
   border-radius: 0 0 10px 0;
   border-top: 1px solid rgba(0, 0, 0, 0.25);
   padding-left: 42px;
@@ -17,8 +16,8 @@
 #chat-form input {
   outline: none;
   padding: 15px;
-  border: 2px solid #ddd;
-  color: #330;
+  border: 2px solid var(--bg-gray);
+  color: var(--black);
   border-radius: 6px;
   font-size: 1.4rem;
 }
