@@ -27,9 +27,7 @@ function Navbar({ auth, user }) {
     <div id="navbar" className="card-shadow">
       <h1>Chat-App</h1>
       <p>{user && `Welcome, ${user.firstname} ${user.lastname}!`}</p>
-      <button onClick={(e) => logout(e)}>
-        LOGOUT
-      </button>
+      <button onClick={(e) => logout(e)}>LOGOUT</button>
     </div>
   );
 }
