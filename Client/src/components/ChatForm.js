@@ -1,8 +1,8 @@
 import "../styles/ChatForm.css";
 
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from "@mui/material/IconButton";
 import React from "react";
-import SendIcon from "@material-ui/icons/Send";
+import SendIcon from "@mui/icons-material/Send";
 
 function ChatForm({ handleSubmit, setInput, input }) {
   return (
