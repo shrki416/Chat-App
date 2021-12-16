@@ -24,6 +24,10 @@ io.sockets.on('connection', (soc) => {
   soc.on('join', ({ userId }) => {
     soc.join(userId);
   });
+
+  soc.on('room', ({ channel }) => {
+    soc.join(channel);
+  });
 });
 
 if (process.env.ENV === 'DEVELOPMENT') {

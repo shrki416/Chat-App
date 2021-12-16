@@ -46,12 +46,23 @@ const createChannelMsgQuery = async (userId, message, channel) => {
 const channelMessageQuery = async (channel) => {
   const query = `SELECT * FROM messages WHERE channel = $1 ORDER BY created_at ASC`;
   const channelMessages = await pool.query(query, [channel]);
-  const id = channelMessages.rows[0].user_id;
-  const user = await getUser(id);
 
-  channelMessages.rows[0].from = `${user.firstname} ${user.lastname}`;
+  const data = channelMessages.rows.map(async (message) => {
+    const id = message.user_id;
+    const user = await getUser(id);
+    message.from = `${user.firstname} ${user.lastname}`;
+    return message;
+  });
 
-  return channelMessages.rows;
+  const completeObject = await Promise.all(data);
+  return completeObject;
+};
+
+const getChannelId = async (channel) => {
+  const query = `SELECT id FROM channels WHERE channel_name = $1`;
+  const id = await pool.query(query, [channel]);
+
+  return id.rows[0];
 };
 
 module.exports = {
@@ -60,4 +71,5 @@ module.exports = {
   userMessagesQuery,
   createChannelMsgQuery,
   channelMessageQuery,
+  getChannelId,
 };

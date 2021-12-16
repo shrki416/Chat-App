@@ -2,12 +2,19 @@ import "../styles/Chat.css";
 
 import React from "react";
 
-function ChatList({ channels, setIsChannel, setChannel, getChatMessages }) {
+function ChatList({
+  channels,
+  setIsChannel,
+  setChannel,
+  getChatMessages,
+  getChannelId,
+}) {
   function handleClick(e) {
     const channel = e.target.textContent;
     setIsChannel(true);
     setChannel(channel);
     getChatMessages(channel);
+    getChannelId(channel);
   }
 
   return (
