@@ -21,6 +21,7 @@ const Chat = ({ auth }) => {
   const [isChannel, setIsChannel] = useState(false);
   const [channel, setChannel] = useState("");
   const [channels] = useState(["Programming", "General", "Random"]);
+  const [channelId, setChannelId] = useState("");
 
   const socket = io();
 
@@ -37,6 +38,10 @@ const Chat = ({ auth }) => {
     } else {
       setLastReceivedMessage({ ...message });
     }
+  });
+
+  socket.on("channel", (data) => {
+    setMessages((messages) => [...messages, data]);
   });
 
   useEffect(() => {
@@ -76,7 +81,8 @@ const Chat = ({ auth }) => {
       message: input,
       from: `${firstname} ${lastname}`,
       receiverId: receiverId,
-      channel,
+      channel: channel,
+      channelId: channelId,
     };
 
     if (!isChannel && !receiverId) {
@@ -91,12 +97,6 @@ const Chat = ({ auth }) => {
       axios.post("/api/channel", data);
     }
 
-    // if (receiverId !== null && receiverId !== "") {
-    //   axios.post("/api/message", data);
-    //   setInput("");
-    // } else {
-    //   alert("Select a buddy to chat with");
-    // }
     setInput("");
   }
 
@@ -112,6 +112,16 @@ const Chat = ({ auth }) => {
       socket.emit("join", { userId: res.data.id });
       localStorage.setItem("me", res.data.id);
       setUser(res.data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  async function getChannelId(channel) {
+    try {
+      const res = await axios.get(`/api/channel/id/${channel}`);
+      setChannelId(res.data);
+      socket.emit("room", { channel: res.data });
     } catch (error) {
       console.error(error.message);
     }
@@ -133,8 +143,13 @@ const Chat = ({ auth }) => {
   }
 
   async function getChatMessages(channel) {
+    const config = {
+      headers: {
+        token: localStorage.token,
+      },
+    };
     try {
-      const { data } = await axios.get(`/api/channel/${channel}`);
+      const { data } = await axios.get(`/api/channel/${channel}`, config);
       setMessages(data);
     } catch (error) {
       console.error(error.message);
@@ -159,6 +174,7 @@ const Chat = ({ auth }) => {
             channels={channels}
             setChannel={setChannel}
             getChatMessages={getChatMessages}
+            getChannelId={getChannelId}
           />
           <div id="new-message-container">
             <AddCircleIcon fontSize="large" id="add-icon" />
