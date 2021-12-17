@@ -12,8 +12,8 @@ import axios from "axios";
 import { io } from "socket.io-client";
 
 const Chat = ({ auth }) => {
-  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]);
   const [user, setUser] = useState("");
   const [receiverId, setReceiverId] = useState("");
   const [receiverName, setReceiverName] = useState("");
@@ -29,6 +29,8 @@ const Chat = ({ auth }) => {
     const mate = localStorage.getItem("mate");
     const me = localStorage.getItem("me");
 
+    console.log(`🍌`, message);
+
     if (
       (message.receiver_id === mate && message.user_id === me) ||
       (message.receiver_id === me && message.user_id === mate)
@@ -41,7 +43,7 @@ const Chat = ({ auth }) => {
   });
 
   socket.on("channel", (data) => {
-    setMessages((messages) => [...messages, data]);
+      setMessages((messages) => [...messages, data]);
   });
 
   useEffect(() => {
@@ -73,28 +75,32 @@ const Chat = ({ auth }) => {
     e.preventDefault();
     if (!input) return;
 
-    const { id, email, firstname, lastname } = user;
-
-    const data = {
-      userId: id,
-      userEmail: email,
-      message: input,
-      from: `${firstname} ${lastname}`,
-      receiverId: receiverId,
-      channel: channel,
-      channelId: channelId,
-    };
+    const { id, firstname, lastname } = user;
 
     if (!isChannel && !receiverId) {
       alert("Please select a user or a channel to send a message to");
     }
 
+    const data = {
+      userId: id,
+      message: input,
+      from: `${firstname} ${lastname}`,
+      receiverId: receiverId,
+    };
+
     if (receiverId !== null && receiverId !== "") {
       axios.post("/api/message", data);
     }
 
+    const roomData = {
+      userId: id,
+      message: input,
+      from: `${firstname} ${lastname}`,
+      channelId: channelId,
+    };
+
     if (isChannel) {
-      axios.post("/api/channel", data);
+      axios.post("/api/channel", roomData);
     }
 
     setInput("");
@@ -121,7 +127,7 @@ const Chat = ({ auth }) => {
     try {
       const res = await axios.get(`/api/channel/id/${channel}`);
       setChannelId(res.data);
-      socket.emit("room", { channel: res.data });
+      socket.emit("room", { roomId: res.data });
     } catch (error) {
       console.error(error.message);
     }
@@ -148,8 +154,10 @@ const Chat = ({ auth }) => {
         token: localStorage.token,
       },
     };
+
     try {
       const { data } = await axios.get(`/api/channel/${channel}`, config);
+      console.log(`🍓`, data);
       setMessages(data);
     } catch (error) {
       console.error(error.message);

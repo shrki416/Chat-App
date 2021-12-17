@@ -25,8 +25,8 @@ io.sockets.on('connection', (soc) => {
     soc.join(userId);
   });
 
-  soc.on('room', ({ channel }) => {
-    soc.join(channel);
+  soc.on('room', ({ roomId }) => {
+    soc.join(roomId);
   });
 });
 

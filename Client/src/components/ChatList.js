@@ -13,8 +13,8 @@ function ChatList({
     const channel = e.target.textContent;
     setIsChannel(true);
     setChannel(channel);
-    getChatMessages(channel);
     getChannelId(channel);
+    getChatMessages(channel);
   }
 
   return (

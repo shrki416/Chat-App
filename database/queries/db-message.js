@@ -36,16 +36,25 @@ const userMessagesQuery = async () => {
   return userMessage.rows;
 };
 
-const createChannelMsgQuery = async (userId, message, channel) => {
-  const query = `INSERT INTO messages(user_id, message, channel) VALUES($1, $2, $3) RETURNING *`;
-  const createMessage = await pool.query(query, [userId, message, channel]);
+const createChannelMsgQuery = async (userId, message, channelId) => {
+  const query = `INSERT INTO room_messages(user_id, message, room_id) VALUES($1, $2, $3) RETURNING *`;
+  const createMessage = await pool.query(query, [userId, message, channelId]);
 
   return createMessage;
 };
 
+const getChannelId = async (channel) => {
+  const query = `SELECT id FROM rooms WHERE room_name = $1`;
+  const id = await pool.query(query, [channel]);
+
+  return id.rows[0];
+};
+
 const channelMessageQuery = async (channel) => {
-  const query = `SELECT * FROM messages WHERE channel = $1 ORDER BY created_at ASC`;
-  const channelMessages = await pool.query(query, [channel]);
+  const roomId = await getChannelId(channel);
+
+  const query = `SELECT * FROM room_messages WHERE room_id = $1 ORDER BY created_at ASC`;
+  const channelMessages = await pool.query(query, [roomId.id]);
 
   const data = channelMessages.rows.map(async (message) => {
     const id = message.user_id;
@@ -56,13 +65,6 @@ const channelMessageQuery = async (channel) => {
 
   const completeObject = await Promise.all(data);
   return completeObject;
-};
-
-const getChannelId = async (channel) => {
-  const query = `SELECT id FROM channels WHERE channel_name = $1`;
-  const id = await pool.query(query, [channel]);
-
-  return id.rows[0];
 };
 
 module.exports = {
