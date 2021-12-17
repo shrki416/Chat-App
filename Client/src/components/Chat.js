@@ -23,6 +23,8 @@ const Chat = ({ auth }) => {
   const [channels] = useState(["Programming", "General", "Random"]);
   const [channelId, setChannelId] = useState("");
 
+  axios.defaults.headers.common = { token: localStorage.token };
+
   const socket = io();
 
   socket.on("message", (message) => {
@@ -43,7 +45,7 @@ const Chat = ({ auth }) => {
   });
 
   socket.on("channel", (data) => {
-      setMessages((messages) => [...messages, data]);
+    setMessages((messages) => [...messages, data]);
   });
 
   useEffect(() => {
@@ -69,6 +71,7 @@ const Chat = ({ auth }) => {
     setReceiverName(name);
     getMessages(user.id, id, name);
     setIsChannel(false);
+    setChannelId("");
   }
 
   async function handleSubmit(e) {
@@ -77,7 +80,7 @@ const Chat = ({ auth }) => {
 
     const { id, firstname, lastname } = user;
 
-    if (!isChannel && !receiverId) {
+    if (isChannel === false && !receiverId) {
       alert("Please select a user or a channel to send a message to");
     }
 
@@ -88,7 +91,7 @@ const Chat = ({ auth }) => {
       receiverId: receiverId,
     };
 
-    if (receiverId !== null && receiverId !== "") {
+    if (receiverId !== null && receiverId !== "" && isChannel === false) {
       axios.post("/api/message", data);
     }
 
@@ -99,7 +102,7 @@ const Chat = ({ auth }) => {
       channelId: channelId,
     };
 
-    if (isChannel) {
+    if (isChannel === true && channelId !== null && channelId !== "") {
       axios.post("/api/channel", roomData);
     }
 
@@ -149,15 +152,8 @@ const Chat = ({ auth }) => {
   }
 
   async function getChatMessages(channel) {
-    const config = {
-      headers: {
-        token: localStorage.token,
-      },
-    };
-
     try {
-      const { data } = await axios.get(`/api/channel/${channel}`, config);
-      console.log(`🍓`, data);
+      const { data } = await axios.get(`/api/channel/${channel}`);
       setMessages(data);
     } catch (error) {
       console.error(error.message);
@@ -183,6 +179,7 @@ const Chat = ({ auth }) => {
             setChannel={setChannel}
             getChatMessages={getChatMessages}
             getChannelId={getChannelId}
+            setReceiverId={setReceiverId}
           />
           <div id="new-message-container">
             <AddCircleIcon fontSize="large" id="add-icon" />
