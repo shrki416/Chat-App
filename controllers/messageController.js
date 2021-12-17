@@ -25,8 +25,9 @@ const messages = async (req, res) => {
     const createMessage = await createMessageQuery(userId, message, receiverId);
     const result = { ...createMessage.rows[0], from };
 
-    io.in(userId).emit('message', result);
-    io.in(receiverId).emit('message', result);
+    io.to([userId, receiverId]).emit('message', result);
+    // io.in(userId).in(receiverId).emit('message', result);
+    // io.in(receiverId).emit('message', result);
   } catch (error) {
     res.status(500).send(error.message);
   }
