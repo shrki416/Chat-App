@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const auth = require('../middleware/auth');
 const {
   privateMessage,
   messages,
@@ -9,12 +10,12 @@ const {
 } = require('../controllers/messageController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
-router.post('/message', catchErrors(messages));
-router.post('/channel', catchErrors(createChannelMessages));
+router.post('/message', auth, catchErrors(messages));
+router.post('/channel', auth, catchErrors(createChannelMessages));
 
-router.get('/message/:userId/:chatMateId', catchErrors(privateMessage));
-router.get('/userMessages', catchErrors(userMessages));
-router.get('/channel/:channel', catchErrors(getChannelMessages));
-router.get('/channel/id/:channel', catchErrors(getChannel));
+router.get('/message/:userId/:chatMateId', auth, catchErrors(privateMessage));
+router.get('/userMessages', auth, catchErrors(userMessages));
+router.get('/channel/:channel', auth, catchErrors(getChannelMessages));
+router.get('/channel/id/:channel', auth, catchErrors(getChannel));
 
 module.exports = router;
