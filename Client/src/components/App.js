@@ -19,7 +19,9 @@ const App = () => {
         headers: { token: localStorage.token },
       };
       const response = await axios.get("/api/verify", config);
-      response ? setIsUserAuthenticated(true) : setIsUserAuthenticated(false);
+      response.status === 200
+        ? setIsUserAuthenticated(true)
+        : setIsUserAuthenticated(false);
     } catch (error) {
       console.error(error.message);
     }
