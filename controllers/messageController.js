@@ -22,7 +22,6 @@ const messages = async (req, res) => {
   const io = req.app.get('socketio');
   try {
     const { userId, message, from, receiverId } = req.body;
-
     const createMessage = await createMessageQuery(userId, message, receiverId);
     const result = { ...createMessage.rows[0], from };
 
@@ -47,9 +46,13 @@ const userMessages = async (req, res) => {
 const createChannelMessages = async (req, res) => {
   const io = req.app.get('socketio');
   try {
-    const { userId, message, from, channel, channelId } = req.body;
+    const { userId, message, from, channelId } = req.body;
 
-    const createMessage = await createChannelMsgQuery(userId, message, channel);
+    const createMessage = await createChannelMsgQuery(
+      userId,
+      message,
+      channelId
+    );
     const result = { ...createMessage.rows[0], from };
 
     io.in(channelId).emit('channel', result);
