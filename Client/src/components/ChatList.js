@@ -8,6 +8,7 @@ function ChatList({
   setChannel,
   getChatMessages,
   getChannelId,
+  setReceiverId,
 }) {
   function handleClick(e) {
     const channel = e.target.textContent;
@@ -15,11 +16,12 @@ function ChatList({
     setChannel(channel);
     getChannelId(channel);
     getChatMessages(channel);
+    setReceiverId("");
   }
 
   return (
     <div id="chat-list">
-      <h2>Channels</h2>
+      <h2>Rooms</h2>
       {channels.map((channel, index) => {
         return (
           <div
