@@ -11,7 +11,7 @@ const server = http.createServer(app);
 const io = socket(server);
 app.set('socketio', io);
 
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, 'Client/build')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -37,7 +37,7 @@ if (process.env.ENV === 'DEVELOPMENT') {
 }
 
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'Client', 'build', 'index.html'));
 });
 
 server.listen(PORT, () => console.log(`Server started on port ${PORT}!`));
