@@ -6,6 +6,7 @@ const {
   createChannelMsgQuery,
   channelMessageQuery,
   getChannelId,
+  getChannels,
 } = require('../database/queries/db-message');
 
 const privateMessage = async (req, res) => {
@@ -25,9 +26,12 @@ const messages = async (req, res) => {
     const createMessage = await createMessageQuery(userId, message, receiverId);
     const result = { ...createMessage.rows[0], from };
 
-    io.to([userId, receiverId]).emit('message', result);
+    // io.to([userId, receiverId]).emit('message', result);
     // io.in(userId).in(receiverId).emit('message', result);
+    // io.in(userId).emit('message', result);
     // io.in(receiverId).emit('message', result);
+
+    io.emit('private-message', result);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -56,7 +60,10 @@ const createChannelMessages = async (req, res) => {
     );
     const result = { ...createMessage.rows[0], from };
 
-    io.in(channelId).emit('channel', result);
+    io.emit('public-message', result);
+
+    // io.in(channelId).emit('channel', result);
+    io.emit('channel', result);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -64,6 +71,7 @@ const createChannelMessages = async (req, res) => {
 
 const getChannelMessages = async (req, res) => {
   try {
+    console.log('params==>>', req.params);
     const { channel } = req.params;
     const channelMessages = await channelMessageQuery(channel);
 
@@ -84,6 +92,16 @@ const getChannel = async (req, res) => {
   }
 };
 
+const getAllChannels = async (req, res) => {
+  try {
+    const channels = await getChannels();
+
+    res.send(channels);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   privateMessage,
   messages,
@@ -91,4 +109,5 @@ module.exports = {
   createChannelMessages,
   getChannelMessages,
   getChannel,
+  getAllChannels,
 };
