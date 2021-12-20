@@ -50,11 +50,18 @@ const getChannelId = async (channel) => {
   return id.rows[0];
 };
 
-const channelMessageQuery = async (channel) => {
-  const roomId = await getChannelId(channel);
+const getChannels = async () => {
+  const query = `SELECT id, room_name FROM rooms`;
+  const id = await pool.query(query);
 
+  return id.rows;
+};
+
+const channelMessageQuery = async (roomId) => {
+  //  const roomId = await getChannelId(channel);
+  console.log('roommm==>>', roomId);
   const query = `SELECT * FROM room_messages WHERE room_id = $1 ORDER BY created_at ASC`;
-  const channelMessages = await pool.query(query, [roomId.id]);
+  const channelMessages = await pool.query(query, [roomId]);
 
   const data = channelMessages.rows.map(async (message) => {
     const id = message.user_id;
@@ -74,4 +81,5 @@ module.exports = {
   createChannelMsgQuery,
   channelMessageQuery,
   getChannelId,
+  getChannels,
 };
