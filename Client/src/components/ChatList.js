@@ -4,17 +4,12 @@ import React from "react";
 
 function ChatList({
   channels,
-  setIsChannel,
   setChannel,
   getChatMessages,
-  getChannelId,
   setReceiverId,
 }) {
-  function handleClick(e) {
-    const channel = e.target.textContent;
-    setIsChannel(true);
+  function handleClick(channel) {
     setChannel(channel);
-    getChannelId(channel);
     getChatMessages(channel);
     setReceiverId("");
   }
@@ -26,10 +21,10 @@ function ChatList({
         return (
           <div
             className="conversation"
-            key={`${index}_${channel}`}
-            onClick={handleClick}
+            key={`${index}_${channel.id}`}
+            onClick={() => handleClick(channel)}
           >
-            <h3>{channel}</h3>
+            <h3>{channel.room_name}</h3>
           </div>
         );
       })}
