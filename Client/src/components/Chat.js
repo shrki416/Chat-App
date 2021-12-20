@@ -1,6 +1,6 @@
 import "../styles/Chat.css";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ChatForm from "./ChatForm";
@@ -18,47 +18,52 @@ const Chat = ({ auth }) => {
   const [receiverId, setReceiverId] = useState("");
   const [receiverName, setReceiverName] = useState("");
   const [lastReceivedMessage, setLastReceivedMessage] = useState({});
-  const [isChannel, setIsChannel] = useState(false);
-  const [channel, setChannel] = useState("");
-  const [channels] = useState(["Programming", "General", "Random"]);
-  const [channelId, setChannelId] = useState("");
+  const [channels, setChannels] = useState([]);
+  const channel = useRef(null);
+
+  const setChannel = (newChannel) => (channel.current = newChannel);
 
   axios.defaults.headers.common = { token: localStorage.token };
 
   const socket = io();
 
-  socket.on("message", (message) => {
-    const mate = localStorage.getItem("mate");
-    const me = localStorage.getItem("me");
-
-    console.log(`🍌`, message);
-
-    if (
-      (message.receiver_id === mate && message.user_id === me) ||
-      (message.receiver_id === me && message.user_id === mate)
-    ) {
-      setMessages((messages) => [...messages, message]);
-      setLastReceivedMessage({ ...message });
-    } else {
-      setLastReceivedMessage({ ...message });
-    }
-  });
-
-  socket.on("channel", (data) => {
-    setMessages((messages) => [...messages, data]);
-  });
-
   useEffect(() => {
-    let isMounted = true;
-    socket.on("connect", () => {
-      if (isMounted) {
-        console.log("connected to server", socket.id);
-        getUserProfile();
+    getUserProfile();
+    getAllChannels();
+
+    // let isMounted = true;
+    // socket.on("connect", () => {
+    //   if (isMounted) {
+    // console.log("connected to server", socket.id);
+    //   }
+    // });
+
+    socket.on("private-message", (message) => {
+      //   console.log(`private-message:`, message);
+      //   const mate = localStorage.getItem("mate");
+      //   const me = localStorage.getItem("me");
+
+      //   if (
+      //     (message.receiver_id === mate && message.user_id === me) ||
+      //     (message.receiver_id === me && message.user_id === mate)
+      //   ) {
+      if (!channel.current) setMessages((messages) => [...messages, message]);
+      setLastReceivedMessage({ ...message });
+      //   } else {
+      //     setLastReceivedMessage({ ...message });
+      //   }
+    });
+
+    socket.on("public-message", (data) => {
+      //console.log(`public-message:==>>`, data, 'channid==>>', channel.current);
+      if (data.room_id === channel.current?.id) {
+        setMessages((messages) => [...messages, data]);
       }
     });
 
     return () => {
-      isMounted = false;
+      socket.off();
+      //   isMounted = false;
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,11 +72,9 @@ const Chat = ({ auth }) => {
   function handleClick(e, id, name) {
     setReceiverId(id);
     localStorage.setItem("mate", id);
-    setReceiverName("");
     setReceiverName(name);
     getMessages(user.id, id, name);
-    setIsChannel(false);
-    setChannelId("");
+    setChannel(null);
   }
 
   async function handleSubmit(e) {
@@ -80,7 +83,7 @@ const Chat = ({ auth }) => {
 
     const { id, firstname, lastname } = user;
 
-    if (isChannel === false && !receiverId) {
+    if (!channel.current && !receiverId) {
       alert("Please select a user or a channel to send a message to");
     }
 
@@ -89,21 +92,15 @@ const Chat = ({ auth }) => {
       message: input,
       from: `${firstname} ${lastname}`,
       receiverId: receiverId,
+      channelId: channel.current?.id,
     };
 
-    if (receiverId !== null && receiverId !== "" && isChannel === false) {
+    if (receiverId && !channel.current) {
       axios.post("/api/message", data);
     }
 
-    const roomData = {
-      userId: id,
-      message: input,
-      from: `${firstname} ${lastname}`,
-      channelId: channelId,
-    };
-
-    if (isChannel === true && channelId !== null && channelId !== "") {
-      axios.post("/api/channel", roomData);
+    if (channel.current) {
+      axios.post("/api/channel", data);
     }
 
     setInput("");
@@ -118,7 +115,6 @@ const Chat = ({ auth }) => {
       };
 
       const res = await axios.get("/api/user", config);
-      socket.emit("join", { userId: res.data.id });
       localStorage.setItem("me", res.data.id);
       setUser(res.data);
     } catch (error) {
@@ -126,11 +122,17 @@ const Chat = ({ auth }) => {
     }
   }
 
-  async function getChannelId(channel) {
+  async function getAllChannels() {
     try {
-      const res = await axios.get(`/api/channel/id/${channel}`);
-      setChannelId(res.data);
-      socket.emit("room", { roomId: res.data });
+      const res = await axios.get(`/api/channels`);
+      setChannels(res.data);
+      const generalChannel = res.data.find(
+        (room) => room.room_name === "General"
+      );
+      if (generalChannel) {
+        setChannel(generalChannel);
+        getChatMessages(generalChannel);
+      }
     } catch (error) {
       console.error(error.message);
     }
@@ -151,9 +153,9 @@ const Chat = ({ auth }) => {
     }
   }
 
-  async function getChatMessages(channel) {
+  async function getChatMessages(room) {
     try {
-      const { data } = await axios.get(`/api/channel/${channel}`);
+      const { data } = await axios.get(`/api/channel/${room.id}`);
       setMessages(data);
     } catch (error) {
       console.error(error.message);
@@ -174,20 +176,24 @@ const Chat = ({ auth }) => {
             lastReceivedMessage={lastReceivedMessage}
           />
           <ChatList
-            setIsChannel={setIsChannel}
             channels={channels}
             setChannel={setChannel}
             getChatMessages={getChatMessages}
-            getChannelId={getChannelId}
             setReceiverId={setReceiverId}
           />
           <div id="new-message-container">
             <AddCircleIcon fontSize="large" id="add-icon" />
           </div>
           <div id="chat-title" className="shadow-light">
-            {isChannel ? `In: ${channel}` : `To: ${receiverName}`}
+            {channel.current
+              ? `In: ${channel.current.room_name}`
+              : `To: ${receiverName}`}
           </div>
-          <ChatMessages messageList={messages} user={user} />
+          <ChatMessages
+            messageList={messages}
+            user={user}
+            isChannel={channel.current}
+          />
           <ChatForm
             handleSubmit={handleSubmit}
             setInput={setInput}
