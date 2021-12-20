@@ -7,11 +7,13 @@ const {
   createChannelMessages,
   getChannelMessages,
   getChannel,
+  getAllChannels,
 } = require('../controllers/messageController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 router.post('/message', auth, catchErrors(messages));
 router.post('/channel', auth, catchErrors(createChannelMessages));
+router.get('/channels', auth, catchErrors(getAllChannels));
 
 router.get('/message/:userId/:chatMateId', auth, catchErrors(privateMessage));
 router.get('/userMessages', auth, catchErrors(userMessages));
