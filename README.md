@@ -30,6 +30,13 @@ $ npm run dev
 
 - Go to http://localhost:3000/
 
+The following will populate 2 dummy users. The logins for the users are as follows:
+
+| Name     | Email (login)      | Password |
+| -------- | ------------------ | -------- |
+| John Doe | john.doe@email.com | 1234     |
+| Jane Doe | jane.doe@email.com | 1234     |
+
 ### Author
 
 - Ahmed Abdelaal - [Website](https://aa-dev.io/) | [LinkedIn](https://www.linkedin.com/in/ahmed-abdelaal-b0b26366/)
