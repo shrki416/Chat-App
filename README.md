@@ -30,7 +30,7 @@ $ npm run dev
 
 - Go to http://localhost:3000/
 
-The following will populate 2 dummy users. The logins for the users are as follows:
+The following will populate 2 dummy users in production/live site. The logins for the users are as follows:
 
 | Name     | Email (login)      | Password |
 | -------- | ------------------ | -------- |
