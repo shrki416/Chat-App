@@ -27,7 +27,7 @@
 
 #navbar button:hover {
   cursor: pointer;
-  color: var(--success);
+  color: var(--black);
 }
 
 #navbar p {
