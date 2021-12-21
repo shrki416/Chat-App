@@ -3,10 +3,10 @@ const {
   privateMessagesQuery,
   createMessageQuery,
   userMessagesQuery,
-  createChannelMsgQuery,
-  channelMessageQuery,
-  getChannelId,
-  getChannels,
+  //   createChannelMsgQuery,
+  //   channelMessageQuery,
+  //   getChannelId,
+  //   getChannels,
 } = require('../database/queries/db-message');
 
 const privateMessage = async (req, res) => {
@@ -26,11 +26,6 @@ const messages = async (req, res) => {
     const createMessage = await createMessageQuery(userId, message, receiverId);
     const result = { ...createMessage.rows[0], from };
 
-    // io.to([userId, receiverId]).emit('message', result);
-    // io.in(userId).in(receiverId).emit('message', result);
-    // io.in(userId).emit('message', result);
-    // io.in(receiverId).emit('message', result);
-
     io.emit('private-message', result);
   } catch (error) {
     res.status(500).send(error.message);
@@ -48,66 +43,60 @@ const userMessages = async (req, res) => {
   }
 };
 
-const createChannelMessages = async (req, res) => {
-  const io = req.app.get('socketio');
-  try {
-    const { userId, message, from, channelId } = req.body;
+// const createChannelMessages = async (req, res) => {
+//   const io = req.app.get('socketio');
+//   try {
+//     const { userId, message, from, channelId } = req.body;
 
-    const createMessage = await createChannelMsgQuery(
-      userId,
-      message,
-      channelId
-    );
-    const result = { ...createMessage.rows[0], from };
+//     const createMessage = await createChannelMsgQuery(
+//       userId,
+//       message,
+//       channelId
+//     );
+//     const result = { ...createMessage.rows[0], from };
 
-    io.emit('public-message', result);
+//     io.emit('public-message', result);
+//   } catch (error) {
+//     res.status(500).send(error.message);
+//   }
+// };
 
-    // io.in(channelId).emit('channel', result);
-    io.emit('channel', result);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-};
+// const getChannelMessages = async (req, res) => {
+//   try {
+//     const { channel } = req.params;
+//     const channelMessages = await channelMessageQuery(channel);
 
-const getChannelMessages = async (req, res) => {
-  try {
-    console.log('params==>>', req.params);
-    const { channel } = req.params;
-    const channelMessages = await channelMessageQuery(channel);
+//     res.send(channelMessages);
+//   } catch (error) {
+//     res.status(500).send(error.message);
+//   }
+// };
 
-    res.send(channelMessages);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-};
+// const getChannel = async (req, res) => {
+//   try {
+//     const { channel } = req.params;
+//     const { id } = await getChannelId(channel);
+//     res.send(id);
+//   } catch (error) {
+//     res.status(500).send(error.message);
+//   }
+// };
 
-const getChannel = async (req, res) => {
-  try {
-    const { channel } = req.params;
-    const { id } = await getChannelId(channel);
-
-    res.send(id);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-};
-
-const getAllChannels = async (req, res) => {
-  try {
-    const channels = await getChannels();
-
-    res.send(channels);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-};
+// const getAllChannels = async (req, res) => {
+//   try {
+//     const channels = await getChannels();
+//     res.send(channels);
+//   } catch (error) {
+//     res.status(500).send(error.message);
+//   }
+// };
 
 module.exports = {
   privateMessage,
   messages,
   userMessages,
-  createChannelMessages,
-  getChannelMessages,
-  getChannel,
-  getAllChannels,
+  //   createChannelMessages,
+  //   getChannelMessages,
+  //   getChannel,
+  //   getAllChannels,
 };
