@@ -1,10 +1,11 @@
 # Chat App
 
-WIP: Coming Soon!
+Full Readme WIP: Coming Soon!
+Live Site: [Demo](https://aa-chat-application.herokuapp.com/)
 
 ## Setup
 
-👉 Rename `sample.env` to `.env`  
+👉 Rename `sample.env` to `.env`
 👉 Replace env variables with your own
 
 ## Installation:
