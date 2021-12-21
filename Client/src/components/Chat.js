@@ -31,31 +31,12 @@ const Chat = ({ auth }) => {
     getUserProfile();
     getAllChannels();
 
-    // let isMounted = true;
-    // socket.on("connect", () => {
-    //   if (isMounted) {
-    // console.log("connected to server", socket.id);
-    //   }
-    // });
-
     socket.on("private-message", (message) => {
-      //   console.log(`private-message:`, message);
-      //   const mate = localStorage.getItem("mate");
-      //   const me = localStorage.getItem("me");
-
-      //   if (
-      //     (message.receiver_id === mate && message.user_id === me) ||
-      //     (message.receiver_id === me && message.user_id === mate)
-      //   ) {
       if (!channel.current) setMessages((messages) => [...messages, message]);
       setLastReceivedMessage({ ...message });
-      //   } else {
-      //     setLastReceivedMessage({ ...message });
-      //   }
     });
 
     socket.on("public-message", (data) => {
-      //console.log(`public-message:==>>`, data, 'channid==>>', channel.current);
       if (data.room_id === channel.current?.id) {
         setMessages((messages) => [...messages, data]);
       }
@@ -63,7 +44,6 @@ const Chat = ({ auth }) => {
 
     return () => {
       socket.off();
-      //   isMounted = false;
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,11 +104,9 @@ const Chat = ({ auth }) => {
 
   async function getAllChannels() {
     try {
-      const res = await axios.get(`/api/channels`);
-      setChannels(res.data);
-      const generalChannel = res.data.find(
-        (room) => room.room_name === "General"
-      );
+      const { data } = await axios.get(`/api/channels`);
+      setChannels(data);
+      const generalChannel = data.find((room) => room.room_name === "General");
       if (generalChannel) {
         setChannel(generalChannel);
         getChatMessages(generalChannel);
