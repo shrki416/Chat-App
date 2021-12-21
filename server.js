@@ -19,21 +19,7 @@ app.use('/api', require('./router/auth'));
 app.use('/api', require('./router/verify'));
 app.use('/api', require('./router/user'));
 app.use('/api', require('./router/message'));
-
-// io.sockets.on('connection', (soc) => {
-//   soc.on('join', ({ userId }) => {
-//     console.log(userId);
-//     // soc.join(userId);
-//   });
-
-//   soc.on('room-chat', ({ roomId }) => {
-//     soc.join(roomId);
-//   });
-// });
-
-// io.on('connection', (socket) => {
-//   console.log(`🙂`, socket.id);
-// });
+app.use('/api', require('./router/channel'));
 
 if (process.env.ENV === 'DEVELOPMENT') {
   app.use(devErrors);
