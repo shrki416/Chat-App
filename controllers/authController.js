@@ -13,8 +13,7 @@ const register = async (req, res) => {
 
   const user = await userQuery(email);
 
-  if (user.rows.length !== 0)
-    return res.status(401).send('User Already Exists');
+  if (user) return res.status(401).send('User Already Exists');
 
   const saltRounds = 10;
   const salt = await bcrypt.genSalt(saltRounds);
