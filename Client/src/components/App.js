@@ -14,6 +14,7 @@ const App = () => {
   const authenticateUser = (Boolean) => setIsUserAuthenticated(Boolean);
 
   const userAuth = async () => {
+    console.log("🍌");
     try {
       const config = {
         headers: { token: localStorage.token },
